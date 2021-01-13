@@ -79,6 +79,7 @@ class UserInfoImpl : UserInfoService{
 				//-------------------- 소환사게임리스트정보 start
 				userMatchListInfoDto = UserMatchListInfoDto()
 				userMatchListInfoDto.gameId = matchInfo.gameId
+				userMatchListInfoDto.queue = matchInfo.queue
 				//-------------------- 소환사게임리스트정보 end
 				
 				//게임상세정보
