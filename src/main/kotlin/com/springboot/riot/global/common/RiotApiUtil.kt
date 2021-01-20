@@ -3,6 +3,12 @@ package com.springboot.riot.global.common
 import org.springframework.http.HttpEntity
 import org.springframework.http.HttpHeaders
 import com.springboot.riot.global.Globals
+import org.springframework.web.context.request.RequestContextHolder
+import org.springframework.web.context.request.ServletRequestAttributes
+import java.io.InputStream
+import java.net.HttpURLConnection
+import java.net.URL
+import javax.servlet.http.HttpServletRequest
 
 class RiotApiUtil {
 	
@@ -13,6 +19,17 @@ class RiotApiUtil {
 			headers.set(Globals.X_RIOT_TOKEN, Globals.API_KEY)
 					
 			return HttpEntity<T>(headers)
+		}
+
+		fun getUrl(url: String): InputStream {
+			val urlObject: URL? = URL(url)
+			val urlConnection: HttpURLConnection = urlObject?.openConnection() as HttpURLConnection
+			return urlConnection.inputStream
+		}
+
+		fun getCurrentRequest(): HttpServletRequest {
+			val sra: ServletRequestAttributes = RequestContextHolder.currentRequestAttributes() as ServletRequestAttributes
+			return sra.request
 		}
 	}
 	

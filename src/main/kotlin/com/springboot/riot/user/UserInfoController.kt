@@ -50,4 +50,12 @@ class UserInfoController {
 		
 		return ResponseEntity<Any>(result,HttpStatus.OK)
 	}
+
+	@RequestMapping("/hello")
+	fun helloWorld(): String {
+		var count = userInfoService.totalCount()
+		println("count : "+count)
+		return "hello"
+	}
+
 }
