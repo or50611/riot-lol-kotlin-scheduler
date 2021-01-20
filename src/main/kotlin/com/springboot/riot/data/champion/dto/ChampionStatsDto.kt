@@ -1,0 +1,25 @@
+package com.springboot.riot.data.champion.dto
+
+data class ChampionStatsDto(
+    var key:String? = null,
+    val hp: Double = 0.0,
+    val hpperlevel: Double = 0.0,
+    val mp: Double = 0.0,
+    val mpperlevel: Double = 0.0,
+    val movespeed: Int = 0,
+    val armor: Int = 0,
+    val armorperlevel: Double = 0.0,
+    val spellblock: Double = 0.0,
+    val spellblockperlevel: Double = 0.0,
+    val attackrange: Int = 0,
+    val hpregen: Double = 0.0,
+    val hpregenperlevel: Double = 0.0,
+    val mpregen: Double = 0.0,
+    val mpregenperlevel: Double = 0.0,
+    val crit: Int = 0,
+    val critperlevel: Int = 0,
+    val attackdamage: Double = 0.0,
+    val attackdamageperlevel: Double = 0.0,
+    val attackspeedperlevel: Double = 0.0,
+    val attackspeed: Double = 0.0,
+)

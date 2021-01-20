@@ -8,5 +8,7 @@ interface UserInfoService {
 	fun summonerInfo(summonerName: String): SummonerDto?
 	//매치리스트
 	fun matchDetailList(summonerDto: SummonerDto): UserMatchInfoDto?
+
+	fun totalCount(): Int?
 	
 }

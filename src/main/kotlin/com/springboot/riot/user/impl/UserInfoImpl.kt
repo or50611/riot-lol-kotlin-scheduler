@@ -22,9 +22,14 @@ import com.springboot.riot.user.dto.MatchReferenceDto
 import com.springboot.riot.user.dto.MatchDto
 import com.springboot.riot.user.dto.ParticipantIdentityDto
 import com.springboot.riot.user.dto.setWinFlag
+import com.springboot.riot.user.mapper.UserMapper
+import org.springframework.beans.factory.annotation.Autowired
 
 @Service
 class UserInfoImpl : UserInfoService{
+
+	@Autowired
+	lateinit var userMapper: UserMapper
 	
 	private val restTemplate: RestTemplate
 	
@@ -154,5 +159,8 @@ class UserInfoImpl : UserInfoService{
 				
 		return userMatchInfoDto
 	}
-	
+
+	override fun totalCount(): Int? {
+		return userMapper.totalCount()
+	}
 }

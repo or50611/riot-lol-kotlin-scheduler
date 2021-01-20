@@ -1,0 +1,189 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.springboot.riot.data.champion.mapper.ChampionMapper">
+
+	<insert id="insertChampionBasic" parameterType="com.springboot.riot.data.champion.dto.ChampionDataDto">
+		INSERT INTO CHAMPION_BASIC
+		(
+		 	C_KEY
+			, ID
+			, C_NAME
+			, TITLE
+			, BLURB
+			, PAR_TYPE
+			, REG_DATE
+		) VALUES (
+			#{key}
+			, #{id}
+			, #{name}
+			, #{title}
+			, #{blurb}
+			, #{partype}
+			, NOW()
+		)
+		ON DUPLICATE KEY
+		UPDATE
+			ID = #{id}
+			, C_NAME = #{name}
+			, TITLE = #{title}
+			, BLURB = #{blurb}
+			, PAR_TYPE = #{partype}
+			, REG_DATE = NOW()
+	</insert>
+
+	<insert id="insertChampionImage" parameterType="com.springboot.riot.data.champion.dto.ChampionImageDto">
+		INSERT INTO CHAMPION_IMAGE
+		(
+		 	C_KEY
+			, C_FULL
+			, SPRITE
+			, C_GROUP
+			, C_X
+			, C_Y
+			, C_W
+			, C_H
+			, REG_DATE
+		) VALUES (
+			#{key}
+			, #{full}
+			, #{sprite}
+			, #{group}
+			, #{x}
+			, #{y}
+			, #{w}
+			, #{h}
+			, NOW()
+		)
+		ON DUPLICATE KEY
+		UPDATE
+			C_FULL = #{full}
+			, SPRITE = #{sprite}
+			, C_GROUP = #{group}
+			, C_X = #{x}
+			, C_Y = #{y}
+			, C_W = #{w}
+			, C_H = #{h}
+			, REG_DATE = NOW()
+	</insert>
+
+	<insert id="insertChampionInfo" parameterType="com.springboot.riot.data.champion.dto.ChampionInfoDto">
+		INSERT INTO CHAMPION_INFO
+		(
+		 	C_KEY
+			, ATTACK
+			, DEFENSE
+			, MAGIC
+			, DIFFICULTY
+			, REG_DATE
+		) VALUES (
+			#{key}
+			, #{attack}
+			, #{defense}
+			, #{magic}
+			, #{difficulty}
+			, NOW()
+		)
+		ON DUPLICATE KEY
+		UPDATE
+			ATTACK = #{attack}
+			, DEFENSE = #{defense}
+			, MAGIC = #{magic}
+			, DIFFICULTY = #{difficulty}
+			, REG_DATE = NOW()
+	</insert>
+
+	<insert id="insertChampionStats" parameterType="com.springboot.riot.data.champion.dto.ChampionStatsDto">
+		INSERT INTO CHAMPION_STATS
+		(
+		 	C_KEY
+			, HP
+			, HP_PER_LEVEL
+			, MP
+			, MP_PER_LEVEL
+			, MOVE_SPEED
+			, ARMOR
+			, ARMOR_PER_LEVEL
+			, SPELL_BLOCK
+			, SPELL_BLOCK_PER_LEVEL
+			, ATTACK_RANGE
+			, HP_REGEN
+			, HP_REGEN_PER_LEVEL
+			, MP_REGEN
+			, MP_REGEN_PER_LEVEL
+			, CRIT
+			, CRIT_PER_LEVEL
+			, ATTACK_DAMAGE
+			, ATTACK_DAMAGE_PER_LEVEL
+			, ATTACK_SPEED
+			, ATTACK_SPEED_PER_LEVEL
+			, REG_DATE
+		) VALUES (
+			#{key}
+			, #{hp}
+			, #{hpperlevel}
+			, #{mp}
+			, #{mpperlevel}
+			, #{movespeed}
+			, #{armor}
+			, #{armorperlevel}
+			, #{spellblock}
+			, #{spellblockperlevel}
+			, #{attackrange}
+			, #{hpregen}
+			, #{hpregenperlevel}
+			, #{mpregen}
+			, #{mpregenperlevel}
+			, #{crit}
+			, #{critperlevel}
+			, #{attackdamage}
+			, #{attackdamageperlevel}
+			, #{attackspeed}
+			, #{attackspeedperlevel}
+			, NOW()
+		)
+		ON DUPLICATE KEY
+		UPDATE
+			HP = #{hp}
+			, HP_PER_LEVEL = #{hpperlevel}
+			, MP = #{mp}
+			, MP_PER_LEVEL = #{mpperlevel}
+			, MOVE_SPEED = #{movespeed}
+			, ARMOR = #{armor}
+			, ARMOR_PER_LEVEL = #{armorperlevel}
+			, SPELL_BLOCK = #{spellblock}
+			, SPELL_BLOCK_PER_LEVEL = #{spellblockperlevel}
+			, ATTACK_RANGE = #{attackrange}
+			, HP_REGEN = #{hpregen}
+			, HP_REGEN_PER_LEVEL = #{hpregenperlevel}
+			, MP_REGEN = #{mpregen}
+			, MP_REGEN_PER_LEVEL = #{mpregenperlevel}
+			, CRIT = #{crit}
+			, CRIT_PER_LEVEL = #{critperlevel}
+			, ATTACK_DAMAGE = #{attackdamage}
+			, ATTACK_DAMAGE_PER_LEVEL = #{attackdamageperlevel}
+			, ATTACK_SPEED = #{attackspeed}
+			, ATTACK_SPEED_PER_LEVEL = #{attackspeedperlevel}
+			, REG_DATE = NOW()
+	</insert>
+
+	<delete id="deleteChampionTags" parameterType="hashMap">
+		DELETE FROM CHAMPION_TAGS
+		WHERE C_KEY = #{key}
+	</delete>
+
+	<insert id="insertChampionTags" parameterType="HashMap">
+		INSERT INTO CHAMPION_TAGS
+		(
+			C_KEY
+			, TAG
+			, REG_DATE
+		) VALUES (
+			#{key}
+			, #{tag}
+			, NOW()
+		)
+
+	</insert>
+
+</mapper>

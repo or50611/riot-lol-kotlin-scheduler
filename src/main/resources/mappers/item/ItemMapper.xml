@@ -1,0 +1,175 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.springboot.riot.data.items.mapper.ItemMapper">
+
+	<insert id="insertItemBasic" parameterType="com.springboot.riot.data.items.dto.ItemDataDto">
+		INSERT INTO ITEM_BASIC
+		(
+		 	I_KEY
+			, I_NAME
+			, DESCRIPTION
+			, COLLOQ
+			, PLAINTEXT
+			, REG_DATE
+		) VALUES (
+			#{key}
+			, #{name}
+			, #{description}
+			, #{colloq}
+			, #{plaintext}
+			, NOW()
+		)
+		ON DUPLICATE KEY
+		UPDATE
+			I_NAME = #{name}
+			, DESCRIPTION = #{description}
+			, COLLOQ = #{colloq}
+			, PLAINTEXT = #{plaintext}
+			, REG_DATE = NOW()
+	</insert>
+
+	<insert id="insertItemGold" parameterType="com.springboot.riot.data.items.dto.ItemGoldDto">
+		INSERT INTO ITEM_GOLD
+		(
+		 	I_KEY
+			, BASE
+			, PURCHASABLE
+			, TOTAL
+			, SELL
+			, REG_DATE
+		) VALUES (
+			#{key}
+			, #{base}
+			, #{purchasable}
+			, #{total}
+			, #{sell}
+			, NOW()
+		)
+		ON DUPLICATE KEY
+		UPDATE
+			BASE = #{base}
+			, PURCHASABLE = #{purchasable}
+			, TOTAL = #{total}
+			, SELL = #{sell}
+			, REG_DATE = NOW()
+	</insert>
+
+	<insert id="insertItemImage" parameterType="com.springboot.riot.data.items.dto.ItemImageDto">
+		INSERT INTO ITEM_IMAGE
+		(
+		 	I_KEY
+			, I_FULL
+			, SPRITE
+			, I_GROUP
+			, I_X
+			, I_Y
+			, I_W
+			, I_H
+			, REG_DATE
+		) VALUES (
+			#{key}
+			, #{full}
+			, #{sprite}
+			, #{group}
+			, #{x}
+			, #{y}
+			, #{w}
+			, #{h}
+			, NOW()
+		)
+		ON DUPLICATE KEY
+		UPDATE
+			I_FULL = #{full}
+			, SPRITE = #{sprite}
+			, I_GROUP = #{group}
+			, I_X = #{x}
+			, I_X = #{y}
+			, I_X = #{w}
+			, I_X = #{h}
+			, REG_DATE = NOW()
+	</insert>
+
+	<insert id="insertItemMaps" parameterType="com.springboot.riot.data.items.dto.ItemMapsDto">
+		INSERT INTO ITEM_MAPS
+		(
+		 	I_KEY
+			, I_11
+			, I_12
+			, I_21
+			, I_22
+			, REG_DATE
+		) VALUES (
+			#{key}
+			, #{i_11}
+			, #{i_12}
+			, #{i_21}
+			, #{i_22}
+			, NOW()
+		)
+		ON DUPLICATE KEY
+		UPDATE
+			I_11 = #{i_11}
+			, I_12 = #{i_12}
+			, I_21 = #{i_21}
+			, I_22 = #{i_22}
+			, REG_DATE = NOW()
+	</insert>
+
+	<delete id="deleteItemTags" parameterType="hashMap">
+		DELETE FROM ITEM_TAGS
+		WHERE I_KEY = #{key}
+	</delete>
+
+	<insert id="insertItemTags" parameterType="HashMap">
+		INSERT INTO ITEM_TAGS
+		(
+			I_KEY
+			, TAG
+			, REG_DATE
+		) VALUES (
+			#{key}
+			, #{tag}
+			, NOW()
+		)
+	</insert>
+
+	<delete id="deleteItemInto" parameterType="hashMap">
+		DELETE FROM ITEM_INTO
+		WHERE I_KEY = #{key}
+	</delete>
+
+	<insert id="insertItemInto" parameterType="HashMap">
+		INSERT INTO ITEM_INTO
+		(
+			I_KEY
+			, I_INTO
+			, REG_DATE
+		) VALUES (
+			#{key}
+			, #{into}
+			, NOW()
+		)
+	</insert>
+
+	<delete id="deleteItemStats" parameterType="hashMap">
+		DELETE FROM ITEM_STATS
+		WHERE I_KEY = #{key}
+	</delete>
+
+	<insert id="insertItemStats" parameterType="HashMap">
+		INSERT INTO ITEM_STATS
+		(
+			I_KEY
+			, STATS_NM
+			, STATS
+			, REG_DATE
+		) VALUES (
+			#{key}
+			, #{statsNm}
+			, #{stats}
+			, NOW()
+		)
+	</insert>
+
+</mapper>
