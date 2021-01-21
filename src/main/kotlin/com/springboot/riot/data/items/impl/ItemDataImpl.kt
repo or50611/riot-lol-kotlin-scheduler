@@ -34,7 +34,7 @@ class ItemDataImpl: ItemDataService {
         //아이템이미지데이터
         itemDto.getDataProperties()?.forEach { e ->
             if(e.key == "1001"){
-                RiotFileUtil.imageDownload(imageDataPath,uploadPath,e.key)
+                RiotFileUtil.imageDownload(imageDataPath,uploadPath,e.key+".png")
             }
             println("key : "+e.key)
         }

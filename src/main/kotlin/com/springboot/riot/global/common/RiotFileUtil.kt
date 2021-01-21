@@ -1,15 +1,13 @@
 package com.springboot.riot.global.common
 
-import com.springboot.riot.global.Globals
 import java.io.*
 import java.net.URL
 
 class RiotFileUtil {
 
     companion object {
-        fun imageDownload(imageDataPath:String, uploadPath:String, championName:String) {
-            val fileName = "$championName.png"
-            val url:URL = URL(imageDataPath+fileName)
+        fun imageDownload(imageDataPath:String, uploadPath:String, imgNm:String) {
+            val url:URL = URL(imageDataPath + imgNm)
             val input: InputStream = BufferedInputStream(url.openStream())
             val out: ByteArrayOutputStream = ByteArrayOutputStream()
             val buf = ByteArray(1024)
@@ -29,12 +27,12 @@ class RiotFileUtil {
                 fileDir.mkdirs()
             }
 
-            val fileData:File = File(uploadPath,fileName)
-            println("$uploadPath$fileName")
+            val fileData:File = File(uploadPath, imgNm)
+            println("$uploadPath$imgNm")
+            val fos: FileOutputStream = FileOutputStream("$uploadPath$imgNm")
+            fos.write(response)
+            fos.close()
             if(!fileData.exists()) {
-                val fos: FileOutputStream = FileOutputStream("$uploadPath$fileName")
-                fos.write(response)
-                fos.close()
             }
 
         }

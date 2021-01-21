@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.springboot.riot.data.rune.mapper.RuneMapper">
+
+	<insert id="insertRuneInfo" parameterType="com.springboot.riot.data.rune.dto.RuneDataDto">
+		INSERT INTO RUNE_INFO
+		(
+		 	ID
+			, PARENT_ID
+			, R_KEY
+			, FILE_NM
+			, ICON
+			, R_NAME
+			, SHORT_DESC
+			, LONG_DESC
+			, REG_DATE
+		) VALUES (
+			#{id}
+			, #{parentId}
+			, #{key}
+			, #{fileNm}
+			, #{icon}
+			, #{name}
+			, #{shortDesc}
+			, #{longDesc}
+			, NOW()
+		)
+		ON DUPLICATE KEY
+		UPDATE
+			PARENT_ID =  #{parentId}
+			, R_KEY = #{key}
+			, FILE_NM = #{fileNm}
+			, ICON = #{icon}
+			, R_NAME = #{name}
+			, SHORT_DESC = #{shortDesc}
+			, LONG_DESC = #{longDesc}
+			, REG_DATE = NOW()
+	</insert>
+
+</mapper>

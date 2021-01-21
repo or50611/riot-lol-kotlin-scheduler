@@ -1,6 +1,6 @@
-package com.springboot.riot.data.items.dto
+package com.springboot.riot.data.summoner_spells.dto
 
-data class ItemImageDto (
+data class SummonerSpellsImageDto(
     var key: String? = null,
     val full: String? = null,
     val sprite: String? = null,

@@ -186,4 +186,141 @@
 
 	</insert>
 
+	<insert id="insertChampionSpellBasic" parameterType="com.springboot.riot.data.champion.dto.ChampionSpellsDto">
+		INSERT INTO CHAMPION_SPELLS_BASIC
+		(
+			C_KEY
+			, ID
+			, S_NAME
+			, DESCRIPTION
+			, TOOLTIP
+			, MAX_RANK
+			, COOLDOWN_BURN
+			, COST_BURN
+			, COST_TYPE
+			, MAX_AMMO
+			, RANGE_BURN
+			, RESOURCE
+			, REG_DATE
+		) VALUES (
+			#{key}
+			, #{id}
+			, #{name}
+			, #{description}
+			, #{tooltip}
+			, #{maxrank}
+			, #{cooldownBurn}
+			, #{costBurn}
+			, #{costType}
+			, #{maxammo}
+			, #{rangeBurn}
+			, #{resource}
+			, NOW()
+		)
+		ON DUPLICATE KEY
+		UPDATE
+			S_NAME = #{name}
+			, DESCRIPTION = #{description}
+			, TOOLTIP = #{tooltip}
+			, MAX_RANK = #{maxrank}
+			, COOLDOWN_BURN = #{cooldownBurn}
+			, COST_BURN = #{costBurn}
+			, COST_TYPE = #{costType}
+			, MAX_AMMO = #{maxammo}
+			, RANGE_BURN = #{rangeBurn}
+			, RESOURCE = #{resource}
+			, REG_DATE = NOW()
+	</insert>
+
+	<insert id="insertChampionSpellImage" parameterType="com.springboot.riot.data.champion.dto.ChampionSpellsImageDto">
+		INSERT INTO CHAMPION_SPELLS_IMAGE
+		(
+			C_KEY
+			, S_FULL
+			, SPRITE
+			, S_GROUP
+			, S_X
+			, S_Y
+			, S_W
+			, S_H
+			, REG_DATE
+		) VALUES (
+			#{key}
+			, #{full}
+			, #{sprite}
+			, #{group}
+			, #{x}
+			, #{y}
+			, #{w}
+			, #{h}
+			, NOW()
+		)
+		ON DUPLICATE KEY
+		UPDATE
+			S_FULL = #{full}
+			, SPRITE = #{sprite}
+			, S_GROUP = #{group}
+			, S_X = #{x}
+			, S_Y = #{y}
+			, S_W = #{w}
+			, S_H = #{h}
+			, REG_DATE = NOW()
+	</insert>
+
+	<insert id="insertChampionPassiveBasic" parameterType="com.springboot.riot.data.champion.dto.ChampionPassiveDto">
+		INSERT INTO CHAMPION_PASSIVE_BASIC
+		(
+			C_KEY
+			, P_NAME
+			, DESCRIPTION
+			, REG_DATE
+		) VALUES (
+			#{key}
+			, #{name}
+			, #{description}
+			, NOW()
+		)
+		ON DUPLICATE KEY
+		UPDATE
+			P_NAME = #{name}
+			, DESCRIPTION = #{description}
+			, REG_DATE = NOW()
+	</insert>
+
+	<insert id="insertChampionPassiveImage" parameterType="com.springboot.riot.data.champion.dto.ChampionPassiveImageDto">
+		INSERT INTO CHAMPION_PASSIVE_IMAGE
+		(
+			C_KEY
+			, P_FULL
+			, SPRITE
+			, P_GROUP
+			, P_X
+			, P_Y
+			, P_W
+			, P_H
+			, REG_DATE
+		) VALUES (
+			#{key}
+			, #{full}
+			, #{sprite}
+			, #{group}
+			, #{x}
+			, #{y}
+			, #{w}
+			, #{h}
+			, NOW()
+		)
+		ON DUPLICATE KEY
+		UPDATE
+			P_FULL = #{full}
+			, SPRITE = #{sprite}
+			, P_GROUP = #{group}
+			, P_X = #{x}
+			, P_Y = #{y}
+			, P_W = #{w}
+			, P_H = #{h}
+			, REG_DATE = NOW()
+	</insert>
+
+
 </mapper>

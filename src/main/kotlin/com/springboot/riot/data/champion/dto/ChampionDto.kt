@@ -8,9 +8,9 @@ import java.util.HashMap
 
 
 class ChampionDto {
-    var type: String? = null
-    var format: String? = null
-    var version: String? = null
+    val type: String? = null
+    val format: String? = null
+    val version: String? = null
 
     var data: MutableMap<String, ChampionDataDto> = HashMap()
 

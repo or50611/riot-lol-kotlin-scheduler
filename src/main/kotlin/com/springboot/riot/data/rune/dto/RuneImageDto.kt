@@ -1,6 +1,6 @@
-package com.springboot.riot.data.items.dto
+package com.springboot.riot.data.rune.dto
 
-data class ItemImageDto (
+data class RuneImageDto(
     var key: String? = null,
     val full: String? = null,
     val sprite: String? = null,

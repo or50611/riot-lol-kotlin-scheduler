@@ -35,7 +35,7 @@ class ChampionDataImpl : ChampionDataService {
         //챔피언이미지데이터
         championDto.getAdditionalProperties()?.forEach { e ->
             if(e.key == "Aatrox"){
-                RiotFileUtil.imageDownload(imageDataPath,uploadPath,e.key)
+                RiotFileUtil.imageDownload(imageDataPath,uploadPath,e.key+".png")
                 println("key : "+e.key)
             }
         }
@@ -52,16 +52,63 @@ class ChampionDataImpl : ChampionDataService {
 //            dataDto.info?.let { championMapper.insertChampionInfo(it) }
 //            dataDto.stats?.let { championMapper.insertChampionStats(it) }
 
-            dataDto.key?.let { championMapper.deleteChampionTags(it) }
-            dataDto.tags?.forEach { str ->
-                tagsMap = HashMap()
-                dataDto.key?.let { tagsMap.put("key", it) }
-                tagsMap["tag"] = str
+//            dataDto.key?.let { championMapper.deleteChampionTags(it) }
+//            dataDto.tags?.forEach { str ->
+//                tagsMap = HashMap()
+//                dataDto.key?.let { tagsMap.put("key", it) }
+//                tagsMap["tag"] = str
+//
+//                championMapper.insertChampionTags(tagsMap)
+//            }
+        }
 
-                championMapper.insertChampionTags(tagsMap)
+        var inSpells:InputStream
+        var championSpellDto: ChampionDto? = ChampionDto()
+
+        val spellsUploadPath: String = request.servletContext.getRealPath("riotImage/spells/")
+        val spellsImagePath: String = Globals.URL_JSON_DATA_PATH+version+"/img/spell/"
+
+        val passiveUploadPath: String = request.servletContext.getRealPath("riotImage/passive/")
+        val passiveImagePath: String = Globals.URL_JSON_DATA_PATH+version+"/img/passive/"
+
+        var imgNm:String? = null
+        var count = 0
+
+        //챔피언스킬, 패시브
+        championDto.getAdditionalProperties()?.forEach { e ->
+
+            inSpells = RiotApiUtil.getUrl(Globals.URL_JSON_DATA_PATH+version+"/data/ko_KR/champion/"+e.key+".json")
+            championSpellDto = gson.fromJson(InputStreamReader(inSpells), ChampionDto::class.java)
+
+            championSpellDto?.getAdditionalProperties()?.values?.forEach { dataDto ->
+
+                //스킬
+                count = 0
+                dataDto.spells?.forEach { spells ->
+                    count++
+
+//                    when(count) {
+//                        1 ->
+//                    }
+                    spells.key = dataDto.key
+                    spells.image?.key = dataDto.key
+                    championMapper.insertChampionSpellBasic(spells)
+
+                    imgNm = spells.image?.full
+                    spells.image?.let { championMapper.insertChampionSpellImage(it) }
+//                    imgNm?.let { RiotFileUtil.imageDownload(spellsImagePath,spellsUploadPath, it) }
+                }
+
+                dataDto.passive?.key = dataDto.key
+                dataDto.passive?.image?.key = dataDto.key
+
+                dataDto.passive?.let { championMapper.insertChampionPassiveBasic(it) }
+                dataDto.passive?.image?.let { championMapper.insertChampionPassiveImage(it) }
+
+                imgNm = dataDto.passive?.image?.full
+//                imgNm?.let { RiotFileUtil.imageDownload(passiveImagePath,passiveUploadPath, it) }
+
             }
-
-
         }
     }
 }
