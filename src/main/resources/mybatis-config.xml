@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE configuration
+        PUBLIC "-//mybatis.org//DTD Config 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-config.dtd">
+<configuration>
+    <!-- <properties resource="config/jdbc.properties" /> -->
+    <settings>
+        <setting name="cacheEnabled" value="true"/>
+        <setting name="useGeneratedKeys" value="true"/>
+        <setting name="defaultExecutorType" value="REUSE"/>
+        <setting name="defaultStatementTimeout" value="3000"/>
+        <setting name="callSettersOnNulls" value="true"/> <!-- 결과가 없어도 컬럼 가져오기 -->
+        <setting name="mapUnderscoreToCamelCase" value="true"/> <!-- 언더바로 구성된 컬럼 카멜케이스로 변경 -->
+    </settings>
+
+
+</configuration>

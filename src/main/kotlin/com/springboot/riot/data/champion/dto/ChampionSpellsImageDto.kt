@@ -2,6 +2,7 @@ package com.springboot.riot.data.champion.dto
 
 data class ChampionSpellsImageDto(
     var key:String? = null,
+    var sort: String? = null,
     val full: String? = null,
     val sprite: String? = null,
     val group: String? = null,

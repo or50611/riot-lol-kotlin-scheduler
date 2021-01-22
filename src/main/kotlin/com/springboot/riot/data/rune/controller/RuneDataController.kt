@@ -12,7 +12,7 @@ class RuneDataController {
     lateinit var runeDataService: RuneDataService
 
     @RequestMapping("/rune")
-    fun itemInfo(): String {
+    fun runeInfo(): String {
         runeDataService.runeJsonInfo()
         return ""
     }

@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.springboot.riot.data.version.mapper.VersionMapper">
+
+	<insert id="insertVersionInfo" parameterType="hashMap">
+		INSERT INTO VERSION_INFO
+		(
+		 	TITLE
+			, VERSION
+			, REG_DATE
+		) VALUES (
+			#{title}
+			, #{version}
+			, NOW()
+		)
+		ON DUPLICATE KEY
+		UPDATE
+			VERSION = #{version}
+			, REG_DATE = NOW()
+	</insert>
+
+</mapper>

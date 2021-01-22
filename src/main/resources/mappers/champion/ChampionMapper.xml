@@ -190,6 +190,7 @@
 		INSERT INTO CHAMPION_SPELLS_BASIC
 		(
 			C_KEY
+			, SORT
 			, ID
 			, S_NAME
 			, DESCRIPTION
@@ -204,6 +205,7 @@
 			, REG_DATE
 		) VALUES (
 			#{key}
+			, #{sort}
 			, #{id}
 			, #{name}
 			, #{description}
@@ -219,7 +221,8 @@
 		)
 		ON DUPLICATE KEY
 		UPDATE
-			S_NAME = #{name}
+			ID = #{id}
+			, S_NAME = #{name}
 			, DESCRIPTION = #{description}
 			, TOOLTIP = #{tooltip}
 			, MAX_RANK = #{maxrank}
@@ -236,6 +239,7 @@
 		INSERT INTO CHAMPION_SPELLS_IMAGE
 		(
 			C_KEY
+			, SORT
 			, S_FULL
 			, SPRITE
 			, S_GROUP
@@ -246,6 +250,7 @@
 			, REG_DATE
 		) VALUES (
 			#{key}
+			, #{sort}
 			, #{full}
 			, #{sprite}
 			, #{group}

@@ -62,16 +62,16 @@ class ChampionDataImpl : ChampionDataService {
 //            }
         }
 
-        var inSpells:InputStream
+        var inSpells: InputStream
         var championSpellDto: ChampionDto? = ChampionDto()
 
         val spellsUploadPath: String = request.servletContext.getRealPath("riotImage/spells/")
-        val spellsImagePath: String = Globals.URL_JSON_DATA_PATH+version+"/img/spell/"
+        val spellsImagePath: String = Globals.URL_JSON_DATA_PATH + version + "/img/spell/"
 
         val passiveUploadPath: String = request.servletContext.getRealPath("riotImage/passive/")
-        val passiveImagePath: String = Globals.URL_JSON_DATA_PATH+version+"/img/passive/"
+        val passiveImagePath: String = Globals.URL_JSON_DATA_PATH + version + "/img/passive/"
 
-        var imgNm:String? = null
+        var imgNm: String? = null
         var count = 0
 
         //챔피언스킬, 패시브
@@ -87,14 +87,18 @@ class ChampionDataImpl : ChampionDataService {
                 dataDto.spells?.forEach { spells ->
                     count++
 
-//                    when(count) {
-//                        1 ->
-//                    }
+                    when(count) {
+                        1 -> spells.sort = "Q"
+                        2 -> spells.sort = "W"
+                        3 -> spells.sort = "E"
+                        4 -> spells.sort = "R"
+                    }
                     spells.key = dataDto.key
                     spells.image?.key = dataDto.key
                     championMapper.insertChampionSpellBasic(spells)
 
                     imgNm = spells.image?.full
+                    spells.image?.sort = spells.sort
                     spells.image?.let { championMapper.insertChampionSpellImage(it) }
 //                    imgNm?.let { RiotFileUtil.imageDownload(spellsImagePath,spellsUploadPath, it) }
                 }

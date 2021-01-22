@@ -37,6 +37,7 @@ class DatabaseConfiguration {
         val factoryBean: SqlSessionFactoryBean = SqlSessionFactoryBean()
         factoryBean.setDataSource(dataSource())
         factoryBean.setMapperLocations(*applicationContext.getResources("classpath:/mappers/**/*Mapper.xml"))
+        factoryBean.setConfigLocation(applicationContext.getResource("classpath:/mybatis-config.xml"))
         return factoryBean.`object`
     }
 
