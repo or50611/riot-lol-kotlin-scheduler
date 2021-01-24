@@ -1,6 +1,7 @@
 package com.springboot.riot.data.rune.impl
 
 import com.google.gson.Gson
+import com.springboot.riot.data.rune.dto.RuneDataDto
 import com.springboot.riot.data.rune.dto.RuneDto
 import com.springboot.riot.data.rune.mapper.RuneMapper
 import com.springboot.riot.data.rune.service.RuneDataService
@@ -33,13 +34,13 @@ class RuneDataImpl: RuneDataService {
         var iconSplit: String? = null
         runeDto = gson.fromJson(InputStreamReader(input), RuneDto::class.java)
 
-        runeDto.forEach { runeDto ->
+        val action: (RuneDataDto) -> Unit = { runeDto ->
             iconSplit = runeDto.icon?.split("/")?.last()
             runeDto.fileNm = iconSplit
 
-            runeDto.fileNm?.let { RiotFileUtil.imageDownload(imageDataPath+runeDto.icon?.replace(it,""), uploadPath, it) }
+            runeDto.fileNm?.let { RiotFileUtil.imageDownload(imageDataPath + runeDto.icon?.replace(it, ""), uploadPath, it) }
 
-            runeMapper.insertRuneInfo(runeDto)
+//            runeMapper.insertRuneInfo(runeDto)
 
             runeDto.slots?.forEach { slots ->
                 slots.runes?.forEach { runes ->
@@ -48,11 +49,12 @@ class RuneDataImpl: RuneDataService {
                     runes.parentId = runeDto.id
                     runes.fileNm = iconSplit
 
-                    runes.fileNm?.let { RiotFileUtil.imageDownload(imageDataPath+runes.icon?.replace(it,""), uploadPath, it) }
+                    runes.fileNm?.let { RiotFileUtil.imageDownload(imageDataPath + runes.icon?.replace(it, ""), uploadPath, it) }
 
-                    runeMapper.insertRuneInfo(runes)
+//                    runeMapper.insertRuneInfo(runes)
                 }
             }
         }
+        runeDto.forEach(action)
     }
 }

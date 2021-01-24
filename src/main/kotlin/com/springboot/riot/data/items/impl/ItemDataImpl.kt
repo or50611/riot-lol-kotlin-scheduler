@@ -33,51 +33,49 @@ class ItemDataImpl: ItemDataService {
 
         //아이템이미지데이터
         itemDto.getDataProperties()?.forEach { e ->
-            if(e.key == "1001"){
-                RiotFileUtil.imageDownload(imageDataPath,uploadPath,e.key+".png")
-            }
+            RiotFileUtil.imageDownload(imageDataPath,uploadPath,e.key+".png")
             println("key : "+e.key)
         }
 
-        var dataMap:HashMap<String,String>
-        itemDto.getDataProperties()?.forEach { e ->
-            println("key : "+e.key)
-            e.value.key = e.key
-            e.value.gold?.key = e.key
-            e.value.image?.key = e.key
-            e.value.maps?.key = e.key
-
-            itemMapper.insertItemBasic(e.value)
-            e.value.gold?.let { itemMapper.insertItemGold(it) }
-            e.value.image?.let { itemMapper.insertItemImage(it) }
-            e.value.maps?.let { itemMapper.insertItemMaps(it) }
-
-            itemMapper.deleteItemTags(e.key)
-            e.value.tags?.forEach { str ->
-                dataMap = HashMap()
-                dataMap["key"] = e.key
-                dataMap["tag"] = str
-                itemMapper.insertItemTags(dataMap)
-            }
-
-            itemMapper.deleteItemInto(e.key)
-            e.value.into?.forEach { str ->
-                dataMap = HashMap()
-                dataMap["key"] = e.key
-                dataMap["into"] = str
-                itemMapper.insertItemInto(dataMap)
-            }
-
-            itemMapper.deleteItemStats(e.key)
-            e.value.getStatsProperties()?.forEach { stats ->
-                dataMap = HashMap()
-                dataMap["key"] = e.key
-                dataMap["statsNm"] = stats.key
-                dataMap["stats"] = stats.value.toString()
-                itemMapper.insertItemStats(dataMap)
-            }
-
-        }
+//        var dataMap:HashMap<String,String>
+//        itemDto.getDataProperties()?.forEach { e ->
+//            println("key : "+e.key)
+//            e.value.key = e.key
+//            e.value.gold?.key = e.key
+//            e.value.image?.key = e.key
+//            e.value.maps?.key = e.key
+//
+//            itemMapper.insertItemBasic(e.value)
+//            e.value.gold?.let { itemMapper.insertItemGold(it) }
+//            e.value.image?.let { itemMapper.insertItemImage(it) }
+//            e.value.maps?.let { itemMapper.insertItemMaps(it) }
+//
+//            itemMapper.deleteItemTags(e.key)
+//            e.value.tags?.forEach { str ->
+//                dataMap = HashMap()
+//                dataMap["key"] = e.key
+//                dataMap["tag"] = str
+//                itemMapper.insertItemTags(dataMap)
+//            }
+//
+//            itemMapper.deleteItemInto(e.key)
+//            e.value.into?.forEach { str ->
+//                dataMap = HashMap()
+//                dataMap["key"] = e.key
+//                dataMap["into"] = str
+//                itemMapper.insertItemInto(dataMap)
+//            }
+//
+//            itemMapper.deleteItemStats(e.key)
+//            e.value.getStatsProperties()?.forEach { stats ->
+//                dataMap = HashMap()
+//                dataMap["key"] = e.key
+//                dataMap["statsNm"] = stats.key
+//                dataMap["stats"] = stats.value.toString()
+//                itemMapper.insertItemStats(dataMap)
+//            }
+//
+//        }
 
     }
 }

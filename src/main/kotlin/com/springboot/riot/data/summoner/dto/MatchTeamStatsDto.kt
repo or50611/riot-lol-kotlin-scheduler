@@ -1,7 +1,7 @@
 package com.springboot.riot.data.summoner.dto
 
 data class MatchTeamStatsDto (
-		var gameId: Int = 0,
+		var gameId: Long = 0L,
 		val teamId: Int = 0,
 		val win: String? = null,
 		val firstBlood: Boolean = false,

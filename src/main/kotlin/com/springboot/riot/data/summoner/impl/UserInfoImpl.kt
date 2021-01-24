@@ -18,7 +18,6 @@ import com.springboot.riot.data.summoner.dto.MatchListDto
 import java.util.ArrayList
 import com.springboot.riot.data.summoner.dto.UserMatchListInfoDto
 import com.springboot.riot.data.summoner.dto.MatchDto
-import com.springboot.riot.data.summoner.dto.setWinFlag
 import com.springboot.riot.data.summoner.mapper.SummonerMapper
 import org.springframework.beans.factory.annotation.Autowired
 
@@ -64,8 +63,8 @@ class UserInfoImpl : UserInfoService {
 			
 			//매치리스트
 			var matchListEntity: ResponseEntity<MatchListDto> = restTemplate.exchange(Globals.API_MATCH_LISTS + summonerDto.accountId + "?endIndex=20", HttpMethod.GET, httpEntity, MatchListDto::class.java)
-			matchListDto = matchListEntity.getBody()
-			userMatchInfoDto?.status = matchListEntity.getStatusCode()
+			matchListDto = matchListEntity.body
+			userMatchInfoDto?.status = matchListEntity.statusCode
 			
 			var items: ArrayList<UserMatchListInfoDto> = ArrayList<UserMatchListInfoDto>();
 			var userMatchListInfoDto: UserMatchListInfoDto
@@ -126,26 +125,6 @@ class UserInfoImpl : UserInfoService {
 				items.add(userMatchListInfoDto)
 				
 			}
-			
-			var participantSize = matchListDto?.matches?.size?.toDouble() ?: 0.0
-			var killUserSum = 0.0
-			var deathUserSum = 0.0
-			var assistUserSum = 0.0
-			var activeScoreUserSum = 0.0
-			
-			items.forEach{ e ->
-				userMatchInfoDto?.setWinFlag(e.win)
-				killUserSum += e.kills
-				deathUserSum += e.deaths
-				assistUserSum += e.assists
-				activeScoreUserSum += e.activeScore
-			}
-			
-			userMatchInfoDto?.avgKill = Math.round(killUserSum / participantSize * 10.0) / 10.0
-			userMatchInfoDto?.avgDeath = Math.round(deathUserSum / participantSize * 10.0) / 10.0
-			userMatchInfoDto?.avgAssist = Math.round(assistUserSum / participantSize * 10.0) / 10.0
-			userMatchInfoDto?.avgActiveScore = Math.round(activeScoreUserSum / participantSize * 100.0) / 100.0
-			
 			userMatchInfoDto?.items = items
 			
 		} catch (e: HttpClientErrorException) {

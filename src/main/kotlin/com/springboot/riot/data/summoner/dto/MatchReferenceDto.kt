@@ -1,6 +1,7 @@
 package com.springboot.riot.data.summoner.dto
 
 data class MatchReferenceDto (
+	var accountId: String? = null,
 	var platformId: String? = null,
 	var gameId: Long = 0L,
 	var champion: Int = 0,

@@ -20,5 +20,40 @@
 			, PROFILE_NM
 		FROM SUMMONER_INFO
 	</select>
+	
+	<select id="selectMatchReferenceOne" parameterType="hashMap" resultType="Int">
+		SELECT COUNT(*)
+		FROM SUMMONER_MATCH_INFO
+		WHERE ACCOUNT_ID = #{accountId}
+		AND   GAME_ID = #{gameId}
+	</select>
+
+	<insert id="insertMatchReference" parameterType="com.springboot.riot.data.summoner.dto.MatchReferenceDto">
+		INSERT INTO SUMMONER_MATCH_INFO
+		(
+			ACCOUNT_ID
+			, GAME_ID
+			, PLATFORM_ID
+			, CHAMPION
+			, QUEUE
+			, SEASON
+			, TIME_STAMP
+			, ROLE
+			, LANE
+			, REG_DATE
+		) VALUES (
+			#{accountId}
+			, #{gameId}
+			, #{platformId}
+			, #{champion}
+			, #{queue}
+			, #{season}
+			, #{timeStamp}
+			, #{role}
+			, #{lane}
+			, NOW()
+		)
+
+	</insert>
 
 </mapper>

@@ -34,10 +34,8 @@ class ChampionDataImpl : ChampionDataService {
 
         //챔피언이미지데이터
         championDto.getAdditionalProperties()?.forEach { e ->
-            if(e.key == "Aatrox"){
-                RiotFileUtil.imageDownload(imageDataPath,uploadPath,e.key+".png")
-                println("key : "+e.key)
-            }
+            RiotFileUtil.imageDownload(imageDataPath,uploadPath,e.key+".png")
+            println("key : "+e.key)
         }
 
         var tagsMap:HashMap<String,String>
@@ -99,18 +97,18 @@ class ChampionDataImpl : ChampionDataService {
 
                     imgNm = spells.image?.full
                     spells.image?.sort = spells.sort
-                    spells.image?.let { championMapper.insertChampionSpellImage(it) }
-//                    imgNm?.let { RiotFileUtil.imageDownload(spellsImagePath,spellsUploadPath, it) }
+//                    spells.image?.let { championMapper.insertChampionSpellImage(it) }
+                    imgNm?.let { RiotFileUtil.imageDownload(spellsImagePath,spellsUploadPath, it) }
                 }
 
                 dataDto.passive?.key = dataDto.key
                 dataDto.passive?.image?.key = dataDto.key
 
-                dataDto.passive?.let { championMapper.insertChampionPassiveBasic(it) }
-                dataDto.passive?.image?.let { championMapper.insertChampionPassiveImage(it) }
+//                dataDto.passive?.let { championMapper.insertChampionPassiveBasic(it) }
+//                dataDto.passive?.image?.let { championMapper.insertChampionPassiveImage(it) }
 
                 imgNm = dataDto.passive?.image?.full
-//                imgNm?.let { RiotFileUtil.imageDownload(passiveImagePath,passiveUploadPath, it) }
+                imgNm?.let { RiotFileUtil.imageDownload(passiveImagePath,passiveUploadPath, it) }
 
             }
         }

@@ -20,11 +20,3 @@ data class UserMatchInfoDto (
 	var errorBodyDto: RiotErrorBodyDto? = null
 	
 )
-
-fun UserMatchInfoDto.setWinFlag(win: Boolean){
-	if(win){
-		this.sumWin++
-	}else{
-		this.sumLoss++
-	}
-}
