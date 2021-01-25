@@ -5,8 +5,8 @@ object Globals {
 		const val RIOT_URL = "https://developer.riotgames.com"
 		
 		const val X_RIOT_TOKEN = "X-Riot-Token"
-	
-		const val API_KEY = ""
+
+		const val API_KEY = "1"
 	
 		const val API_SUMMONER_NAME = "https://kr.api.riotgames.com/lol/summoner/v4/summoners/by-name/"
 	
