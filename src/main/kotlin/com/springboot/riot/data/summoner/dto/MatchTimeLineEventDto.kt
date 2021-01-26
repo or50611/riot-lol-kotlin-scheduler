@@ -11,10 +11,10 @@ data class MatchTimeLineEventDto(
     //WARD_KILL
     //BUILDING_KILL
     //ELITE_MONSTER
-    var gameId: Int = 0,
-    val parentTimestamp: Int = 0,
+    var gameId: Long = 0L,
+    var parentTimestamp: Long = 0L,
     val type: String? = null,
-    val timestamp: Int = 0,
+    val timestamp: Long = 0L,
 
     //WARD,CHAMPION,BUILDING
     val killerId: Int = 0,

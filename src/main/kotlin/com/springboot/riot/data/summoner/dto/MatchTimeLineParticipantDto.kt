@@ -1,7 +1,8 @@
 package com.springboot.riot.data.summoner.dto
 
 data class MatchTimeLineParticipantDto(
-    var gameId: Int = 0,
+    var gameId: Long = 0L,
+    var parentTimestamp: Long = 0L,
     var frameId: Int = 0,
     val participantId: Int = 0,
     val position: MatchTimeLinePositionDto? = null,

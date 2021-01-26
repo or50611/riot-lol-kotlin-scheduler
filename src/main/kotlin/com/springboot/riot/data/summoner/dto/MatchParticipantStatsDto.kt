@@ -61,6 +61,8 @@ data class MatchParticipantStatsDto (
 	val firstBloodAssist: Boolean = false,
 	val firstTowerKill: Boolean = false,
 	val firstTowerAssist: Boolean = false,
+	val firstInhibitorKill: Boolean = false,
+	val firstInhibitorAssist: Boolean = false,
 	val combatPlayerScore: Int = 0,
 	val objectivePlayerScore: Int = 0,
 	val totalPlayerScore: Int = 0,

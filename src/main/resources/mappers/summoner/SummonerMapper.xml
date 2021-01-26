@@ -28,6 +28,12 @@
 		AND   GAME_ID = #{gameId}
 	</select>
 
+	<select id="selectMatchBasicOne" parameterType="hashMap" resultType="Int">
+		SELECT COUNT(*)
+		FROM MATCH_BASIC
+		WHERE GAME_ID = #{gameId}
+	</select>
+
 	<insert id="insertMatchReference" parameterType="com.springboot.riot.data.summoner.dto.MatchReferenceDto">
 		INSERT INTO SUMMONER_MATCH_INFO
 		(
@@ -48,12 +54,401 @@
 			, #{champion}
 			, #{queue}
 			, #{season}
-			, #{timeStamp}
+			, #{timestamp}
 			, #{role}
 			, #{lane}
 			, NOW()
 		)
+	</insert>
 
+	<insert id="insertMatchBasic" parameterType="com.springboot.riot.data.summoner.dto.MatchDto">
+		INSERT INTO MATCH_BASIC
+		(
+			GAME_ID
+			, PLATFORM_ID
+			, GAME_CREATION
+			, GAME_DURATION
+			, QUEUE_ID
+			, MAP_ID
+			, SEASON_ID
+			, GAME_VERSION
+			, GAME_MODE
+			, GAME_TYPE
+			, REG_DATE
+		) VALUES (
+			#{gameId}
+			, #{platformId}
+			, #{gameCreation}
+			, #{gameDuration}
+			, #{queueId}
+			, #{mapId}
+			, #{seasonId}
+			, #{gameVersion}
+			, #{gameMode}
+			, #{gameType}
+			, NOW()
+		)
+	</insert>
+
+	<insert id="insertMatchTeamStats" parameterType="com.springboot.riot.data.summoner.dto.MatchTeamStatsDto">
+		INSERT INTO MATCH_TEAM
+		(
+			GAME_ID
+			, TEAM_ID
+			, WIN
+			, FIRST_BLOOD
+			, FIRST_TOWER
+			, FIRST_INHIBITOR
+			, FIRST_BARON
+			, FIRST_DRAGON
+			, FIRST_RIFT_HERALD
+			, TOWER_KILLS
+			, INHIBITOR_KILLS
+			, BARON_KILLS
+			, VILEMAW_KILLS
+			, RIFT_HERALD_KILLS
+			, DOMINION_VICTORY_SCORE
+			, REG_DATE
+		) VALUES (
+			#{gameId}
+			, #{teamId}
+			, #{win}
+			, #{firstBlood}
+			, #{firstTower}
+			, #{firstInhibitor}
+			, #{firstBaron}
+			, #{firstDragon}
+			, #{firstRiftHerald}
+			, #{towerKills}
+			, #{inhibitorKills}
+			, #{baronKills}
+			, #{vilemawKills}
+			, #{riftHeraldKills}
+			, #{dominionVictoryScore}
+			, NOW()
+		)
+	</insert>
+
+	<insert id="insertMatchTeamBans" parameterType="com.springboot.riot.data.summoner.dto.MatchTeamBansDto">
+		INSERT INTO MATCH_TEAM_BAN
+		(
+			GAME_ID
+			, TEAM_ID
+			, CHAMPION_ID
+			, PICK_TURN
+			, REG_DATE
+		) VALUES (
+			#{gameId}
+			, #{teamId}
+			, #{championId}
+			, #{pickTurn}
+			, NOW()
+		)
+	</insert>
+
+	<insert id="insertMatchParticipant" parameterType="com.springboot.riot.data.summoner.dto.MatchParticipantDto">
+		INSERT INTO MATCH_PARTICIPANT_BASIC
+		(
+			GAME_ID
+			, PARTICIPANT_ID
+			, TEAM_ID
+			, CHAMPION_ID
+			, SPELL1_ID
+			, SPELL2_ID
+			, REG_DATE
+		) VALUES (
+			#{gameId}
+			, #{participantId}
+			, #{teamId}
+			, #{championId}
+			, #{spell1Id}
+			, #{spell2Id}
+			, NOW()
+		)
+	</insert>
+
+	<insert id="insertMatchParticipantStats" parameterType="com.springboot.riot.data.summoner.dto.MatchParticipantStatsDto">
+		INSERT INTO MATCH_PARTICIPANT_STATS
+		(
+			GAME_ID
+			, PARTICIPANT_ID
+			, WIN
+			, ITEM_0
+			, ITEM_1
+			, ITEM_2
+			, ITEM_3
+			, ITEM_4
+			, ITEM_5
+			, ITEM_6
+			, KILLS
+			, DEATHS
+			, ASSISTS
+			, LARGEST_KILLING_SPREE
+			, LARGEST_MULTI_KILL
+			, KILLING_SPREES
+			, LONGEST_TIME_SPENT_LIVING
+			, DOUBLE_KILLS
+			, TRIPLE_KILLS
+			, QUADRA_KILLS
+			, PENTA_KILLS
+			, UNREAL_KILLS
+			, TOTAL_DAMAGE_DEALT
+			, MAGIC_DAMAGE_DEALT
+			, PHYSICAL_DAMAGE_DEALT
+			, TRUE_DAMAGE_DEALT
+			, LARGEST_CRITICAL_STRIKE
+			, TOTAL_DAMAGE_DEALT_TO_CHAMPIONS
+			, MAGIC_DAMAGE_DEALT_TO_CHAMPIONS
+			, PHYSICAL_DAMAGE_DEALT_TO_CHAMPIONS
+			, TRUE_DAMAGE_DEALT_TO_CHAMPIONS
+			, TOTAL_HEAL
+			, TOTAL_UNITS_HEALED
+			, DAMAGE_SELF_MITIGATED
+			, DAMAGE_DEALT_TO_OBJECTIVES
+			, DAMAGE_DEALT_TO_TURRETS
+			, VISION_SCORE
+			, TIME_CCING_OTHERS
+			, TOTAL_DAMAGE_TAKEN
+			, MAGIC_DAMAGE_TAKEN
+			, PHYSICAL_DAMAGE_TAKEN
+			, TRUE_DAMAGE_TAKEN
+			, GOLD_EARNED
+			, GOLD_SPENT
+			, TURRET_KILLS
+			, INHIBITOR_KILLS
+			, TOTAL_MINIONS_KILLED
+			, NEUTRAL_MINIONS_KILLED
+			, NEUTRAL_MINIONS_KILLED_TEAM_JUNGLE
+			, NEUTRAL_MINIONS_KILLED_ENEMY_JUNGLE
+			, TOTAL_TIME_CROWD_CONTROL_DEALT
+			, CHAMP_LEVEL
+			, VISION_WARDS_BOUGHT_INGAME
+			, SIGHT_WARDS_BOUGHT_INGAME
+			, WARDS_PLACED
+			, WARDS_KILLED
+			, FIRST_BLOOD_KILL
+			, FIRST_BLOOD_ASSIST
+			, FIRST_TOWER_KILL
+			, FIRST_TOWER_ASSIST
+			, FIRST_INHIBITOR_KILL
+			, FIRST_INHIBITOR_ASSIST
+			, COMBAT_PLAYER_SCORE
+			, OBJECTIVE_PLAYER_SCORE
+			, TOTAL_PLAYER_SCORE
+			, TOTAL_SCORE_RANK
+			, PLAYER_SCORE_0
+			, PLAYER_SCORE_1
+			, PLAYER_SCORE_2
+			, PLAYER_SCORE_3
+			, PLAYER_SCORE_4
+			, PLAYER_SCORE_5
+			, PLAYER_SCORE_6
+			, PLAYER_SCORE_7
+			, PLAYER_SCORE_8
+			, PLAYER_SCORE_9
+			, PERK_0
+			, PERK_0_VAL_1
+			, PERK_0_VAL_2
+			, PERK_0_VAL_3
+			, PERK_1
+			, PERK_1_VAL_1
+			, PERK_1_VAL_2
+			, PERK_1_VAL_3
+			, PERK_2
+			, PERK_2_VAL_1
+			, PERK_2_VAL_2
+			, PERK_2_VAL_3
+			, PERK_3
+			, PERK_3_VAL_1
+			, PERK_3_VAL_2
+			, PERK_3_VAL_3
+			, PERK_4
+			, PERK_4_VAL_1
+			, PERK_4_VAL_2
+			, PERK_4_VAL_3
+			, PERK_5
+			, PERK_5_VAL_1
+			, PERK_5_VAL_2
+			, PERK_5_VAL_3
+			, PERK_PRIMARY_STYLE
+			, PERK_SUB_STYLE
+			, STAT_PERK_0
+			, STAT_PERK_1
+			, STAT_PERK_2
+			, REG_DATE
+		) VALUES (
+			#{gameId}
+			, #{participantId}
+			, #{win}
+			, #{item0}
+			, #{item1}
+			, #{item2}
+			, #{item3}
+			, #{item4}
+			, #{item5}
+			, #{item6}
+			, #{kills}
+			, #{deaths}
+			, #{assists}
+			, #{largestKillingSpree}
+			, #{largestMultiKill}
+			, #{killingSprees}
+			, #{longestTimeSpentLiving}
+			, #{doubleKills}
+			, #{tripleKills}
+			, #{quadraKills}
+			, #{pentaKills}
+			, #{unrealKills}
+			, #{totalDamageDealt}
+			, #{magicDamageDealt}
+			, #{physicalDamageDealt}
+			, #{trueDamageDealt}
+			, #{largestCriticalStrike}
+			, #{totalDamageDealtToChampions}
+			, #{magicDamageDealtToChampions}
+			, #{physicalDamageDealtToChampions}
+			, #{trueDamageDealtToChampions}
+			, #{totalHeal}
+			, #{totalUnitsHealed}
+			, #{damageSelfMitigated}
+			, #{damageDealtToObjectives}
+			, #{damageDealtToTurrets}
+			, #{visionScore}
+			, #{timeCCingOthers}
+			, #{totalDamageTaken}
+			, #{magicalDamageTaken}
+			, #{physicalDamageTaken}
+			, #{trueDamageTaken}
+			, #{goldEarned}
+			, #{goldSpent}
+			, #{turretKills}
+			, #{inhibitorKills}
+			, #{totalMinionsKilled}
+			, #{neutralMinionsKilled}
+			, #{neutralMinionsKilledTeamJungle}
+			, #{neutralMinionsKilledEnemyJungle}
+			, #{totalTimeCrowdControlDealt}
+			, #{champLevel}
+			, #{visionWardsBoughtInGame}
+			, #{sightWardsBoughtInGame}
+			, #{wardsPlaced}
+			, #{wardsKilled}
+			, #{firstBloodKill}
+			, #{firstBloodAssist}
+			, #{firstTowerKill}
+			, #{firstTowerAssist}
+			, #{firstInhibitorKill}
+			, #{firstInhibitorAssist}
+			, #{combatPlayerScore}
+			, #{objectivePlayerScore}
+			, #{totalPlayerScore}
+			, #{totalScoreRank}
+			, #{playerScore0}
+			, #{playerScore1}
+			, #{playerScore2}
+			, #{playerScore3}
+			, #{playerScore4}
+			, #{playerScore5}
+			, #{playerScore6}
+			, #{playerScore7}
+			, #{playerScore8}
+			, #{playerScore9}
+			, #{perk0}
+			, #{perk0Var1}
+			, #{perk0Var2}
+			, #{perk0Var3}
+			, #{perk1}
+			, #{perk1Var1}
+			, #{perk1Var2}
+			, #{perk1Var3}
+			, #{perk2}
+			, #{perk2Var1}
+			, #{perk2Var2}
+			, #{perk2Var3}
+			, #{perk3}
+			, #{perk3Var1}
+			, #{perk3Var2}
+			, #{perk3Var3}
+			, #{perk4}
+			, #{perk4Var1}
+			, #{perk4Var2}
+			, #{perk4Var3}
+			, #{perk5}
+			, #{perk5Var1}
+			, #{perk5Var2}
+			, #{perk5Var3}
+			, #{perkPrimaryStyle}
+			, #{perkSubStyle}
+			, #{statPerk0}
+			, #{statPerk1}
+			, #{statPerk2}
+			, NOW()
+		)
+	</insert>
+
+	<insert id="insertMatchParticipantTimeLine" parameterType="com.springboot.riot.data.summoner.dto.MatchParticipantTimeLineDto">
+		INSERT INTO MATCH_PARTICIPANT_TIMELINE
+		(
+			GAME_ID
+			, PARTICIPANT_ID
+			, ROLE
+			, LANE
+			, REG_DATE
+		) VALUES (
+			#{gameId}
+			, #{participantId}
+			, #{role}
+			, #{lane}
+			, NOW()
+		)
+	</insert>
+
+	<insert id="insertMatchParticipantTimeLineDelta" parameterType="hashMap">
+		INSERT INTO MATCH_PARTICIPANT_TIMELINE_DELTA
+		(
+			GAME_ID
+			, PARTICIPANT_ID
+			, MIN_DELTA
+			, MIN_0010
+			, MIN_1020
+			, REG_DATE
+		) VALUES (
+			#{gameId}
+			, #{participantId}
+			, #{minDelta}
+			, #{min0010}
+			, #{min1020}
+			, NOW()
+		)
+	</insert>
+
+	<insert id="insertMatchParticipantIdentities" parameterType="com.springboot.riot.data.summoner.dto.MatchPlayerDto">
+		INSERT INTO MATCH_PARTICIPANT_INFO
+		(
+			GAME_ID
+			, PARTICIPANT_ID
+			, PLATFORM_ID
+			, ACCOUNT_ID
+			, SUMMONER_NAME
+			, SUMMONER_ID
+			, CURRENT_PLATFORM_ID
+			, CURRENT_ACCOUNT_ID
+			, MATCH_HISTORY_URI
+			, PROFILE_ICON
+			, REG_DATE
+		) VALUES (
+			#{gameId}
+			, #{participantId}
+			, #{platformId}
+			, #{accountId}
+			, #{summonerName}
+			, #{summonerId}
+			, #{currentPlatformId}
+			, #{currentAccountId}
+			, #{matchHistoryUri}
+			, #{profileIcon}
+			, NOW()
+		)
 	</insert>
 
 </mapper>

@@ -11,6 +11,8 @@ interface SummonerMapper {
 
     fun selectMatchReferenceOne(dataMap: HashMap<String, Any?>): Int
 
+    fun selectMatchBasicOne(dataMap: HashMap<String, Any?>): Int
+
     fun insertMatchReference(matchReferenceDto: MatchReferenceDto): Int
 
     fun insertMatchBasic(matchDto: MatchDto): Int
@@ -24,5 +26,13 @@ interface SummonerMapper {
     fun insertMatchParticipantStats(matchParticipantStatsDto: MatchParticipantStatsDto): Int
 
     fun insertMatchParticipantTimeLine(matchParticipantTimeLineDto: MatchParticipantTimeLineDto): Int
+
+    fun insertMatchParticipantTimeLineDelta(dataMap: HashMap<String, Any>): Int
+
+    fun insertMatchParticipantIdentities(matchPlayerDto: MatchPlayerDto): Int
+
+    fun insertMatchTimeLineParticipant(matchTimeLineParticipantDto: MatchTimeLineParticipantDto): Int
+
+    fun insertMatchTimeLineParticipantPosition(matchTimeLinePositionDto: MatchTimeLinePositionDto): Int
 
 }

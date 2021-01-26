@@ -6,9 +6,9 @@ data class MatchParticipantTimeLineDto(
     val role: String? = null,
     val lane: String? = null,
 
+    val goldPerMinDeltas: MatchParticipantTimeLineDeltaDto? = null,
     val creepsPerMinDeltas: MatchParticipantTimeLineDeltaDto? = null,
     val xpPerMinDeltas: MatchParticipantTimeLineDeltaDto? = null,
-    val goldPerMinDeltas: MatchParticipantTimeLineDeltaDto? = null,
     val csDiffPerMinDeltas: MatchParticipantTimeLineDeltaDto? = null,
     val xpDiffPerMinDeltas: MatchParticipantTimeLineDeltaDto? = null,
     val damageTakenPerMinDeltas: MatchParticipantTimeLineDeltaDto? = null,

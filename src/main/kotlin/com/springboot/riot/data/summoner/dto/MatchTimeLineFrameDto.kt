@@ -5,8 +5,8 @@ import com.fasterxml.jackson.annotation.JsonAnySetter
 import java.util.HashMap
 
 class MatchTimeLineFrameDto {
-    var gameId: Int = 0
-    val timestamp: Int = 0
+    var gameId: Long = 0L
+    val timestamp: Long = 0L
     val events: List<MatchTimeLineEventDto>? = null
 
     var participantFrames: MutableMap<String, MatchTimeLineParticipantDto> = HashMap()
