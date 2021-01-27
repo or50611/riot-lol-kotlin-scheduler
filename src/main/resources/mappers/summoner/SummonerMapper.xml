@@ -451,4 +451,235 @@
 		)
 	</insert>
 
+	<insert id="insertMatchTimeLineParticipant" parameterType="com.springboot.riot.data.summoner.dto.MatchTimeLineParticipantDto">
+		INSERT INTO MATCH_TIMELINE_PARTICIPANT
+		(
+			GAME_ID
+			, PARENT_TIMESTAMP
+			, FRAME_ID
+			, PARTICIPANT_ID
+			, CURRENT_GOLD
+			, TOTAL_GOLD
+			, LEVEL
+			, XP
+			, MINIONS_KILLED
+			, JUNGLE_MINIONS_KILLED
+			, DOMINION_SCORE
+			, TEAM_SCORE
+			, REG_DATE
+
+		) VALUES (
+			#{gameId}
+			, #{parentTimestamp}
+			, #{frameId}
+			, #{participantId}
+			, #{currentGold}
+			, #{totalGold}
+			, #{level}
+			, #{xp}
+			, #{minionsKilled}
+			, #{jungleMinionsKilled}
+			, #{dominionScore}
+			, #{teamScore}
+			, NOW()
+		)
+	</insert>
+
+	<insert id="insertMatchTimeLineParticipantPosition" parameterType="com.springboot.riot.data.summoner.dto.MatchTimeLinePositionDto">
+		INSERT INTO MATCH_TIMELINE_PARTICIPANT_POSITION
+		(
+			GAME_ID
+			, PARENT_TIMESTAMP
+			, FRAME_ID
+			, PARTICIPANT_ID
+			, X
+			, Y
+			, REG_DATE
+		) VALUES (
+			#{gameId}
+			, #{parentTimestamp}
+			, #{frameId}
+			, #{participantId}
+			, #{x}
+			, #{y}
+			, NOW()
+		)
+	</insert>
+
+	<insert id="insertMatchTimeLineEventSkill" parameterType="com.springboot.riot.data.summoner.dto.MatchTimeLineEventDto">
+		INSERT INTO MATCH_TIMELINE_EVENT_SKILL
+		(
+			GAME_ID
+			, PARENT_TIMESTAMP
+			, TIMESTAMP
+			, E_TYPE
+			, PARTICIPANT_ID
+			, SKILL_SLOT
+			, LEVEL_UP_TYPE
+			, REG_DATE
+		) VALUES (
+			#{gameId}
+			, #{parentTimestamp}
+			, #{timestamp}
+			, #{type}
+			, #{participantId}
+			, #{skillSlot}
+			, #{levelUpType}
+			, NOW()
+		)
+	</insert>
+
+	<insert id="insertMatchTimeLineEventItem" parameterType="com.springboot.riot.data.summoner.dto.MatchTimeLineEventDto">
+		INSERT INTO MATCH_TIMELINE_EVENT_ITEM
+		(
+			GAME_ID
+			, PARENT_TIMESTAMP
+			, TIMESTAMP
+			, E_TYPE
+			, PARTICIPANT_ID
+			, ITEM_ID
+			, AFTER_ID
+			, BEFORE_ID
+			, REG_DATE
+		) VALUES (
+			#{gameId}
+			, #{parentTimestamp}
+			, #{timestamp}
+			, #{type}
+			, #{participantId}
+			, #{itemId}
+			, #{afterId}
+			, #{beforeId}
+			, NOW()
+		)
+	</insert>
+
+	<insert id="insertMatchTimeLineEventChampion" parameterType="com.springboot.riot.data.summoner.dto.MatchTimeLineEventDto">
+		INSERT INTO MATCH_TIMELINE_EVENT_CHAMPION
+		(
+			GAME_ID
+			, PARENT_TIMESTAMP
+			, TIMESTAMP
+			, E_TYPE
+			, KILLER_ID
+			, VICTIM_ID
+			, REG_DATE
+		) VALUES (
+			#{gameId}
+			, #{parentTimestamp}
+			, #{timestamp}
+			, #{type}
+			, #{killerId}
+			, #{victimId}
+			, NOW()
+		)
+	</insert>
+
+	<insert id="insertMatchTimeLineEventWard" parameterType="com.springboot.riot.data.summoner.dto.MatchTimeLineEventDto">
+		INSERT INTO MATCH_TIMELINE_EVENT_WARD
+		(
+			GAME_ID
+			, PARENT_TIMESTAMP
+			, TIMESTAMP
+			, E_TYPE
+			, WARD_TYPE
+			, CREATOR_ID
+			, KILLER_ID
+			, REG_DATE
+		) VALUES (
+			#{gameId}
+			, #{parentTimestamp}
+			, #{timestamp}
+			, #{type}
+			, #{wardType}
+			, #{creatorId}
+			, #{killerId}
+			, NOW()
+		)
+	</insert>
+
+	<insert id="insertMatchTimeLineEventBuilding" parameterType="com.springboot.riot.data.summoner.dto.MatchTimeLineEventDto">
+		INSERT INTO MATCH_TIMELINE_EVENT_BUILDING
+		(
+			GAME_ID
+			, PARENT_TIMESTAMP
+			, TIMESTAMP
+			, E_TYPE
+			, KILLER_ID
+			, TEAM_ID
+			, BUILDING_TYPE
+			, TOWER_TYPE
+			, REG_DATE
+		) VALUES (
+			#{gameId}
+			, #{parentTimestamp}
+			, #{timestamp}
+			, #{type}
+			, #{killerId}
+			, #{teamId}
+			, #{buildingType}
+			, #{towerType}
+			, NOW()
+		)
+	</insert>
+
+	<insert id="insertMatchTimeLineEventMonster" parameterType="com.springboot.riot.data.summoner.dto.MatchTimeLineEventDto">
+		INSERT INTO MATCH_TIMELINE_EVENT_MONSTER
+		(
+			GAME_ID
+			, PARENT_TIMESTAMP
+			, TIMESTAMP
+			, E_TYPE
+			, KILLER_ID
+			, MONSTER_TYPE
+			, MONSTER_SUB_TYPE
+			, REG_DATE
+		) VALUES (
+			#{gameId}
+			, #{parentTimestamp}
+			, #{timestamp}
+			, #{type}
+			, #{killerId}
+			, #{monsterType}
+			, #{monsterSubType}
+			, NOW()
+		)
+	</insert>
+
+	<insert id="insertMatchTimeLineEventPosition" parameterType="com.springboot.riot.data.summoner.dto.MatchTimeLineEventDto">
+		INSERT INTO MATCH_TIMELINE_EVENT_POSITION
+		(
+			GAME_ID
+			, PARENT_TIMESTAMP
+			, TIMESTAMP
+			, X
+			, Y
+			, REG_DATE
+		) VALUES (
+			#{gameId}
+			, #{parentTimestamp}
+			, #{timestamp}
+			, #{x}
+			, #{y}
+			, NOW()
+		)
+	</insert>
+
+	<insert id="insertMatchTimeLineEventAssist" parameterType="com.springboot.riot.data.summoner.dto.MatchTimeLineEventDto">
+		INSERT INTO MATCH_TIMELINE_EVENT_ASSIST
+		(
+			GAME_ID
+			, PARENT_TIMESTAMP
+			, TIMESTAMP
+			, PARTICIPANT_ID
+			, REG_DATE
+		) VALUES (
+			#{gameId}
+			, #{parentTimestamp}
+			, #{timestamp}
+			, #{participantId}
+			, NOW()
+		)
+	</insert>
+
 </mapper>
