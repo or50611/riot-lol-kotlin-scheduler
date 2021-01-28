@@ -14,4 +14,6 @@ data class MatchTimeLineParticipantDto(
     val jungleMinionsKilled: Int = 0,
     val dominionScore: Int = 0,
     val teamScore: Int = 0,
+    var x: Int = 0,
+    var y: Int = 0,
 )

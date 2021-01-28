@@ -190,7 +190,7 @@
 		INSERT INTO CHAMPION_SPELLS_BASIC
 		(
 			C_KEY
-			, SORT
+			, SKILL_SLOT
 			, ID
 			, S_NAME
 			, DESCRIPTION
@@ -205,7 +205,7 @@
 			, REG_DATE
 		) VALUES (
 			#{key}
-			, #{sort}
+			, #{skillSlot}
 			, #{id}
 			, #{name}
 			, #{description}
@@ -239,7 +239,7 @@
 		INSERT INTO CHAMPION_SPELLS_IMAGE
 		(
 			C_KEY
-			, SORT
+			, SKILL_SLOT
 			, S_FULL
 			, SPRITE
 			, S_GROUP
@@ -250,7 +250,7 @@
 			, REG_DATE
 		) VALUES (
 			#{key}
-			, #{sort}
+			, #{skillSlot}
 			, #{full}
 			, #{sprite}
 			, #{group}

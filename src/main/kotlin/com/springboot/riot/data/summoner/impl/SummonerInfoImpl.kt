@@ -13,6 +13,7 @@ import org.springframework.http.HttpMethod
 import org.springframework.http.ResponseEntity
 import org.springframework.stereotype.Service
 import org.springframework.web.client.RestTemplate
+import java.time.LocalDateTime
 
 @Service
 class SummonerInfoImpl: SummonerService {
@@ -36,31 +37,29 @@ class SummonerInfoImpl: SummonerService {
         var dataMap: HashMap<String, Any?>
         summonerInfoVo.forEach { vo ->
             //매치리스트
-            var matchListEntity: ResponseEntity<MatchListDto> = restTemplate.exchange(Globals.API_MATCH_LISTS + vo.accountId + "?endIndex=2", HttpMethod.GET, httpEntity, MatchListDto::class.java)
+            val matchListEntity: ResponseEntity<MatchListDto> = restTemplate.exchange(Globals.API_MATCH_LISTS + vo.accountId + "?endIndex=2", HttpMethod.GET, httpEntity, MatchListDto::class.java)
             matchListDto = matchListEntity.body
 
             matchListDto?.matches?.forEach { matchInfo ->
-                println("----------------- matchInfo.gameId : "+matchInfo.gameId)
                 dataMap = HashMap()
                 dataMap["accountId"] = vo.accountId
                 dataMap["gameId"] = matchInfo.gameId
 
-//                if(vo.accountId == "B_tQuW5NqQoI4I4beO_Qy48xqR-00TjfhJuY1pwytoCRPOI") {
-//                    return@forEach
-//                }
-
                 val count = summonerMapper.selectMatchReferenceOne(dataMap)
 
                 if(count == 0){
+                    var time: LocalDateTime = LocalDateTime.now()
+
+                    println("=======================================================")
+                    println("START : "+time+", GAME_ID : "+matchInfo.gameId)
                     matchInfo.accountId = vo.accountId
-                    summonerMapper.insertMatchReference(matchInfo)
 
                     val basicCount = summonerMapper.selectMatchBasicOne(dataMap)
 
                     if(basicCount == 0){
                         //게임상세정보
-                        var matchEntity: ResponseEntity<MatchDto> = restTemplate.exchange(Globals.API_MATCH_INFO + matchInfo.gameId, HttpMethod.GET, httpEntity, MatchDto::class.java)
-                        var matchDto: MatchDto? = matchEntity.body
+                        val matchEntity: ResponseEntity<MatchDto> = restTemplate.exchange(Globals.API_MATCH_INFO + matchInfo.gameId, HttpMethod.GET, httpEntity, MatchDto::class.java)
+                        val matchDto: MatchDto? = matchEntity.body
 
                         matchDto?.let {
                             summonerMapper.insertMatchBasic(it)
@@ -77,7 +76,6 @@ class SummonerInfoImpl: SummonerService {
                             }
 
                             it.participants?.forEach { participants ->
-                                println(participants.participantId)
                                 participants.gameId = it.gameId
                                 participants.stats?.gameId = it.gameId
                                 participants.timeline?.gameId = it.gameId
@@ -89,20 +87,20 @@ class SummonerInfoImpl: SummonerService {
                                 participants.timeline?.let { timeLine ->
                                     summonerMapper.insertMatchParticipantTimeLine(timeLine)
 
-                                    var dataMap: HashMap<String,Any>
-                                    timeLine?.javaClass?.declaredFields?.forEach { field ->
+                                    var deltaMap: HashMap<String,Any>
+                                    timeLine.javaClass.declaredFields.forEach { field ->
                                         field.isAccessible = true
-                                        var any:Any? = field.get(timeLine)
+                                        val any:Any? = field.get(timeLine)
 
-                                        if(any is MatchParticipantTimeLineDeltaDto && any != null) {
-                                            dataMap = HashMap()
-                                            dataMap["gameId"] = timeLine.gameId
-                                            dataMap["participantId"] = timeLine.participantId
-                                            dataMap["minDelta"] = field.name
-                                            dataMap["min0010"] = any.min0010
-                                            dataMap["min1020"] = any.min1020
+                                        if(any is MatchParticipantTimeLineDeltaDto) {
+                                            deltaMap = HashMap()
+                                            deltaMap["gameId"] = timeLine.gameId
+                                            deltaMap["participantId"] = timeLine.participantId
+                                            deltaMap["minDelta"] = field.name
+                                            deltaMap["min0010"] = any.min0010
+                                            deltaMap["min1020"] = any.min1020
 
-                                            summonerMapper.insertMatchParticipantTimeLineDelta(dataMap)
+                                            summonerMapper.insertMatchParticipantTimeLineDelta(deltaMap)
                                         }
                                     }
                                 }
@@ -117,7 +115,6 @@ class SummonerInfoImpl: SummonerService {
                             }
                         }
 
-                        println("matchInfo.gameId : "+matchInfo.gameId)
                         //매치타임라인정보
                         val timeLineEntity: ResponseEntity<MatchTimeLineDto> = restTemplate.exchange(Globals.API_MATCH_TIMELINE_INFO + matchInfo.gameId, HttpMethod.GET, httpEntity, MatchTimeLineDto::class.java)
                         val matchTimeLineDto: MatchTimeLineDto? = timeLineEntity.body
@@ -125,16 +122,12 @@ class SummonerInfoImpl: SummonerService {
                         matchTimeLineDto?.frames?.forEach { frames ->
                             frames.getAdditionalProperties()?.forEach { participantFrames ->
                                 participantFrames.value.gameId = matchInfo.gameId
-                                println("participantFrames.key : "+participantFrames.key)
                                 participantFrames.value.frameId = participantFrames.key.toIntOrNull() ?: 0
                                 participantFrames.value.parentTimestamp = frames.timestamp
-
-                                participantFrames.value.position?.gameId = matchInfo.gameId
-                                participantFrames.value.position?.frameId = participantFrames.key.toIntOrNull() ?: 0
-                                participantFrames.value.position?.parentTimestamp = frames.timestamp
+                                participantFrames.value.x = participantFrames.value.position?.x ?: 0
+                                participantFrames.value.y = participantFrames.value.position?.y ?: 0
 
                                 summonerMapper.insertMatchTimeLineParticipant(participantFrames.value)
-                                participantFrames.value.position?.let { summonerMapper.insertMatchTimeLineParticipantPosition(it) }
                             }
 
                             frames.events?.forEach { events ->
@@ -146,22 +139,29 @@ class SummonerInfoImpl: SummonerService {
                                 events.type?.let { type ->
                                     when {
                                         type.startsWith("SKILL") -> summonerMapper.insertMatchTimeLineEventSkill(events)
-                                        type.startsWith("ITEM") -> summonerMapper.insertMatchTimeLineEventItem(events)
+                                        type.startsWith("ITEM") -> {
+                                            summonerMapper.insertMatchTimeLineEventItem(events)
+//                                            if(type != "ITEM_DESTROYED"){
+//                                            }
+                                        }
                                         type.startsWith("WARD") -> summonerMapper.insertMatchTimeLineEventWard(events)
                                         type.startsWith("ELITE") -> {
+                                            events.x = events.position?.x ?: 0
+                                            events.y = events.position?.y ?: 0
                                             summonerMapper.insertMatchTimeLineEventMonster(events)
-                                            events.position?.let { summonerMapper.insertMatchTimeLineEventPosition(it) }
                                         }
                                         type.startsWith("CHAMPION") -> {
+                                            events.x = events.position?.x ?: 0
+                                            events.y = events.position?.y ?: 0
                                             summonerMapper.insertMatchTimeLineEventChampion(events)
-                                            events.position?.let { summonerMapper.insertMatchTimeLineEventPosition(it) }
                                             events.assistingParticipantIds?.forEach { id ->
                                                 insertAssisData(id,events)
                                             }
                                         }
                                         type.startsWith("BUILDING") -> {
+                                            events.x = events.position?.x ?: 0
+                                            events.y = events.position?.y ?: 0
                                             summonerMapper.insertMatchTimeLineEventBuilding(events)
-                                            events.position?.let { summonerMapper.insertMatchTimeLineEventPosition(it) }
                                             events.assistingParticipantIds?.forEach { id ->
                                                 insertAssisData(id,events)
                                             }
@@ -171,6 +171,10 @@ class SummonerInfoImpl: SummonerService {
                             }
                         }
                     }
+
+                    summonerMapper.insertMatchReference(matchInfo)
+                    time = LocalDateTime.now()
+                    println("END : "+time+", GAME_ID : "+matchInfo.gameId)
                 }
             }
         }

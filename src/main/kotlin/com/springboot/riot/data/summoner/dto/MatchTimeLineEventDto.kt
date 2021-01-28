@@ -52,4 +52,7 @@ data class MatchTimeLineEventDto(
     val laneType: String? = null,
     val towerType: String? = null,
 
+    var x: Int = 0,
+    var y: Int = 0,
+
 )

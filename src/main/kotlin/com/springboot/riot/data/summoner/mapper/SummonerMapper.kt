@@ -33,8 +33,6 @@ interface SummonerMapper {
 
     fun insertMatchTimeLineParticipant(matchTimeLineParticipantDto: MatchTimeLineParticipantDto): Int
 
-    fun insertMatchTimeLineParticipantPosition(matchTimeLinePositionDto: MatchTimeLinePositionDto): Int
-
     fun insertMatchTimeLineEventSkill(matchTimeLineEventDto: MatchTimeLineEventDto): Int
 
     fun insertMatchTimeLineEventItem(matchTimeLineEventDto: MatchTimeLineEventDto): Int

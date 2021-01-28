@@ -466,6 +466,8 @@
 			, JUNGLE_MINIONS_KILLED
 			, DOMINION_SCORE
 			, TEAM_SCORE
+			, X
+			, Y
 			, REG_DATE
 
 		) VALUES (
@@ -481,25 +483,6 @@
 			, #{jungleMinionsKilled}
 			, #{dominionScore}
 			, #{teamScore}
-			, NOW()
-		)
-	</insert>
-
-	<insert id="insertMatchTimeLineParticipantPosition" parameterType="com.springboot.riot.data.summoner.dto.MatchTimeLinePositionDto">
-		INSERT INTO MATCH_TIMELINE_PARTICIPANT_POSITION
-		(
-			GAME_ID
-			, PARENT_TIMESTAMP
-			, FRAME_ID
-			, PARTICIPANT_ID
-			, X
-			, Y
-			, REG_DATE
-		) VALUES (
-			#{gameId}
-			, #{parentTimestamp}
-			, #{frameId}
-			, #{participantId}
 			, #{x}
 			, #{y}
 			, NOW()
@@ -563,6 +546,8 @@
 			, E_TYPE
 			, KILLER_ID
 			, VICTIM_ID
+			, X
+			, Y
 			, REG_DATE
 		) VALUES (
 			#{gameId}
@@ -571,6 +556,8 @@
 			, #{type}
 			, #{killerId}
 			, #{victimId}
+			, #{x}
+			, #{y}
 			, NOW()
 		)
 	</insert>
@@ -609,6 +596,8 @@
 			, TEAM_ID
 			, BUILDING_TYPE
 			, TOWER_TYPE
+			, X
+			, Y
 			, REG_DATE
 		) VALUES (
 			#{gameId}
@@ -619,6 +608,8 @@
 			, #{teamId}
 			, #{buildingType}
 			, #{towerType}
+			, #{x}
+			, #{y}
 			, NOW()
 		)
 	</insert>
@@ -633,6 +624,8 @@
 			, KILLER_ID
 			, MONSTER_TYPE
 			, MONSTER_SUB_TYPE
+			, X
+			, Y
 			, REG_DATE
 		) VALUES (
 			#{gameId}
@@ -642,6 +635,8 @@
 			, #{killerId}
 			, #{monsterType}
 			, #{monsterSubType}
+			, #{x}
+			, #{y}
 			, NOW()
 		)
 	</insert>
