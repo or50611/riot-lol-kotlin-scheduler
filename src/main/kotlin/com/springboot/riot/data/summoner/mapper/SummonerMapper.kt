@@ -49,4 +49,8 @@ interface SummonerMapper {
 
     fun insertMatchTimeLineEventAssist(assistList: HashMap<String,Any>): Int
 
+    //라인확인
+    fun selectParticipantBasicList(gameId: Long): List<MatchParticipantDto>
+    fun selectParticipantPositionList(gameId: Long): List<MatchTimeLineParticipantDto>
+
 }

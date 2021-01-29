@@ -677,4 +677,20 @@
 		)
 	</insert>
 
+	<select id="selectParticipantBasicList" parameterType="Long" resultType="com.springboot.riot.data.summoner.dto.MatchParticipantDto">
+		SELECT *
+		FROM MATCH_PARTICIPANT_BASIC
+		WHERE GAME_ID = #{gameId}
+		ORDER BY PARTICIPANT_ID
+	</select>
+
+	<select id="selectParticipantPositionList" parameterType="Long" resultType="com.springboot.riot.data.summoner.dto.MatchTimeLineParticipantDto">
+		SELECT *
+		FROM MATCH_TIMELINE_PARTICIPANT
+		WHERE GAME_ID = #{gameId}
+		AND	PARENT_TIMESTAMP > 100000 AND PARENT_TIMESTAMP <![CDATA[<]]> 700000
+		ORDER BY PARENT_TIMESTAMP
+	</select>
+
+
 </mapper>
