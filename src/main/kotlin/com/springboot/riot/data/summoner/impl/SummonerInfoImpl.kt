@@ -44,6 +44,8 @@ class SummonerInfoImpl: SummonerService {
         var scaleY: Double
 
         var positionList = summonerMapper.selectParticipantPositionList(id)
+        var itemList = summonerMapper.selectParticipantItemList(id)
+
 
         summonerMapper.selectParticipantBasicList(id).forEach { basic ->
             var top = 0
@@ -51,34 +53,56 @@ class SummonerInfoImpl: SummonerService {
             var jungle = 0
             var bottom = 0
             var etc = 0
+
+            var supportFlag = false
             basic.participantId
 
             var filterList = positionList.filter { basic.participantId == it.participantId }.toList()
 
-            filterList.forEach { position ->
-                    scaleX = (position.x - xMin) / (xMax - xMin) * (mapMax - mapMin)
-                    scaleY = mapMax - ((position.y - yMin) / (yMax - yMin) * (mapMax - mapMin))
-
-                    when{
-                        scaleX > 195 && scaleX < 265 && scaleY > 250 && scaleY < 310 -> mid++
-                        scaleX > 170 && scaleX < 340 && scaleY > 170 && scaleY < 340 -> mid++
-                        scaleX > 250 && scaleX < 320 && scaleY > 200 && scaleY < 260 -> mid++
-                        scaleX > 320 && scaleX < 385 && scaleY > 125 && scaleY < 190 -> mid++
-                        scaleX > 125 && scaleX < 190 && scaleY > 320 && scaleY < 385 -> mid++
-
-                        scaleX > 20 && scaleX < 60 && scaleY > 30 && scaleY < 270 -> top++
-                        scaleX > 20 && scaleX < 150 && scaleY > 20 && scaleY < 160 -> top++
-                        scaleX > 30 && scaleX < 270 && scaleY > 20 && scaleY < 60 -> top++
-
-                        scaleX > 240 && scaleX < 460 && scaleY > 435 && scaleY < 485 -> bottom++
-                        scaleX > 370 && scaleX < 490 && scaleY > 355 && scaleY < 480 -> bottom++
-                        scaleX > 440 && scaleX < 490 && scaleY > 265 && scaleY < 455 -> bottom++
-
-                        scaleX > 0 && scaleX < 170 && scaleY > 340 && scaleY < 512 -> etc++
-                        scaleX > 340 && scaleX < 265 && scaleY > 0 && scaleY < 170 -> etc++
-                        else -> jungle++
-                    }
+            itemList.forEach { item ->
+                when(item.itemId){
+                    3854,3858,3862 -> supportFlag = true
+                }
             }
+
+            filterList.forEach { position ->
+                scaleX = (position.x - xMin) / (xMax - xMin) * (mapMax - mapMin)
+                scaleY = mapMax - ((position.y - yMin) / (yMax - yMin) * (mapMax - mapMin))
+
+                when {
+                    scaleX > 195 && scaleX < 265 && scaleY > 250 && scaleY < 310 -> mid++
+                    scaleX > 170 && scaleX < 340 && scaleY > 170 && scaleY < 340 -> mid++
+                    scaleX > 250 && scaleX < 320 && scaleY > 200 && scaleY < 260 -> mid++
+                    scaleX > 320 && scaleX < 385 && scaleY > 125 && scaleY < 190 -> mid++
+                    scaleX > 125 && scaleX < 190 && scaleY > 320 && scaleY < 385 -> mid++
+
+                    scaleX > 20 && scaleX < 60 && scaleY > 30 && scaleY < 270 -> top++
+                    scaleX > 20 && scaleX < 150 && scaleY > 20 && scaleY < 160 -> top++
+                    scaleX > 30 && scaleX < 270 && scaleY > 20 && scaleY < 60 -> top++
+
+                    scaleX > 240 && scaleX < 460 && scaleY > 435 && scaleY < 485 -> bottom++
+                    scaleX > 370 && scaleX < 490 && scaleY > 355 && scaleY < 480 -> bottom++
+                    scaleX > 440 && scaleX < 490 && scaleY > 265 && scaleY < 455 -> bottom++
+
+                    scaleX > 0 && scaleX < 170 && scaleY > 340 && scaleY < 512 -> etc++
+                    scaleX > 340 && scaleX < 265 && scaleY > 0 && scaleY < 170 -> etc++
+                    else -> jungle++
+                }
+
+            }
+
+            var laneMap = mutableMapOf("TOP" to top, "MID" to mid, "JUNGLE" to jungle, "BOTTOM" to bottom)
+
+            var sortList = laneMap.toList().sortedWith(compareByDescending { it.second }).first()
+
+            if(sortList.first == "BOTTOM"){
+                if(supportFlag){
+
+                }else{
+
+                }
+            }
+
             println("------------------- "+basic.participantId)
             println("top : "+top)
             println("mid : "+mid)

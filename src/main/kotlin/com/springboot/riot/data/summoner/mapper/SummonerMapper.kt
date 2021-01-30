@@ -52,5 +52,6 @@ interface SummonerMapper {
     //라인확인
     fun selectParticipantBasicList(gameId: Long): List<MatchParticipantDto>
     fun selectParticipantPositionList(gameId: Long): List<MatchTimeLineParticipantDto>
+    fun selectParticipantItemList(gameId: Long): List<MatchTimeLineEventDto>
 
 }

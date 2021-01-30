@@ -692,5 +692,15 @@
 		ORDER BY PARENT_TIMESTAMP
 	</select>
 
+	<select id="selectParticipantItemList" parameterType="Long" resultType="com.springboot.riot.data.summoner.dto.MatchTimeLineParticipantDto">
+		SELECT *
+		FROM MATCH_TIMELINE_EVENT_ITEM
+		WHERE GAME_ID = #{gameId}
+		AND	PARENT_TIMESTAMP <![CDATA[<]]> 100000
+		AND	E_TYPE = 'ITEM_PURCHASED'
+	</select>
+
+
+
 
 </mapper>
