@@ -678,10 +678,19 @@
 	</insert>
 
 	<select id="selectParticipantBasicList" parameterType="Long" resultType="com.springboot.riot.data.summoner.dto.MatchParticipantDto">
-		SELECT *
-		FROM MATCH_PARTICIPANT_BASIC
-		WHERE GAME_ID = #{gameId}
-		ORDER BY PARTICIPANT_ID
+		SELECT MP_BASIC.GAME_ID
+			, MP_BASIC.PARTICIPANT_ID
+			, MP_BASIC.TEAM_ID
+			, MP_BASIC.CHAMPION_ID
+			, MP_BASIC.SPELL1_ID
+			, MP_BASIC.SPELL2_ID
+			, MP_INFO.ACCOUNT_ID
+		FROM MATCH_PARTICIPANT_BASIC MP_BASIC
+		JOIN MATCH_PARTICIPANT_INFO MP_INFO
+		ON	 MP_BASIC.GAME_ID = MP_INFO.GAME_ID
+		AND MP_BASIC.PARTICIPANT_ID = MP_INFO.PARTICIPANT_ID
+		WHERE MP_BASIC.GAME_ID = #{gameId}
+		ORDER BY MP_BASIC.PARTICIPANT_ID
 	</select>
 
 	<select id="selectParticipantPositionList" parameterType="Long" resultType="com.springboot.riot.data.summoner.dto.MatchTimeLineParticipantDto">
@@ -692,13 +701,30 @@
 		ORDER BY PARENT_TIMESTAMP
 	</select>
 
-	<select id="selectParticipantItemList" parameterType="Long" resultType="com.springboot.riot.data.summoner.dto.MatchTimeLineParticipantDto">
+	<select id="selectParticipantItemList" parameterType="Long" resultType="com.springboot.riot.data.summoner.dto.MatchTimeLineEventDto">
 		SELECT *
 		FROM MATCH_TIMELINE_EVENT_ITEM
 		WHERE GAME_ID = #{gameId}
 		AND	PARENT_TIMESTAMP <![CDATA[<]]> 100000
 		AND	E_TYPE = 'ITEM_PURCHASED'
 	</select>
+
+	<update id="updateParticipantLane" parameterType="hashMap">
+		UPDATE MATCH_PARTICIPANT_TIMELINE
+		SET
+		LANE = #{lane}
+		WHERE GAME_ID = #{gameId}
+		AND	  PARTICIPANT_ID = #{participantId}
+	</update>
+
+	<update id="updateSummonerMatchLane" parameterType="hashMap">
+		UPDATE SUMMONER_MATCH_INFO
+		SET
+		LANE = #{lane}
+		, ENEMY_CHAMPION = #{enemyChampion}
+		WHERE GAME_ID = #{gameId}
+		AND	  ACCOUNT_ID = #{accountId}
+	</update>
 
 
 

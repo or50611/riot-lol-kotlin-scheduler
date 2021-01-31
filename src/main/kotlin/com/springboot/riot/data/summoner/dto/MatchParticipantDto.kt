@@ -7,6 +7,7 @@ data class MatchParticipantDto (
 	val championId: Int = 0,
 	val spell1Id: Int = 0,
 	val spell2Id: Int = 0,
+	val accountId: String? = null,
 
 	val stats: MatchParticipantStatsDto? = null,
 	val timeline: MatchParticipantTimeLineDto? = null,

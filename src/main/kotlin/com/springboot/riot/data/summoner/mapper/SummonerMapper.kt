@@ -53,5 +53,7 @@ interface SummonerMapper {
     fun selectParticipantBasicList(gameId: Long): List<MatchParticipantDto>
     fun selectParticipantPositionList(gameId: Long): List<MatchTimeLineParticipantDto>
     fun selectParticipantItemList(gameId: Long): List<MatchTimeLineEventDto>
+    fun updateParticipantLane(map: HashMap<String,Any>): Int
+    fun updateSummonerMatchLane(map: HashMap<String,Any?>): Int
 
 }
