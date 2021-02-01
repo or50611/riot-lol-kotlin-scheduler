@@ -10,7 +10,6 @@ import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.stereotype.Service
 import java.io.InputStream
 import java.io.InputStreamReader
-import java.lang.reflect.Field
 
 @Service
 class VersionDataImpl: VersionDataService {
@@ -22,7 +21,7 @@ class VersionDataImpl: VersionDataService {
 
         val gson: Gson = Gson()
         val versionDto: VersionDto
-        val input: InputStream = RiotApiUtil.getUrl("https://ddragon.leagueoflegends.com/realms/na.json")
+        val input: InputStream = RiotApiUtil.getUrl(Globals.URL_VERSION_JSON)
 
         versionDto = gson.fromJson(InputStreamReader(input), VersionDto::class.java)
 

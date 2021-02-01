@@ -19,5 +19,10 @@
 			VERSION = #{version}
 			, REG_DATE = NOW()
 	</insert>
+	
+	<select id="selectVersionList" resultType="com.springboot.riot.data.version.vo.VersionVo">
+		SELECT TITLE, VERSION
+		FROM VERSION_INFO
+	</select>
 
 </mapper>

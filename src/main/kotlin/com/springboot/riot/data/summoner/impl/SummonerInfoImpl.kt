@@ -254,7 +254,6 @@ class SummonerInfoImpl: SummonerService {
                                 mMap["champion"] = basic.championId
                                 mMap["accountId"] = basic.accountId ?: ""
 
-
                                 summonerMapper.updateParticipantLane(mMap)
 
                                 laneList.add(mMap)
