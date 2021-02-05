@@ -11,4 +11,6 @@ data class MatchParticipantDto (
 
 	val stats: MatchParticipantStatsDto? = null,
 	val timeline: MatchParticipantTimeLineDto? = null,
+
+	//이건 회사에서 작업한거임.
 )
