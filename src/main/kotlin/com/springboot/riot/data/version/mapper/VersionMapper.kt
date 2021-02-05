@@ -8,6 +8,8 @@ interface VersionMapper {
 
     fun insertVersionInfo(dataMap: HashMap<String,String>): Int
 
+    fun updateVersionInfo(dataMap: MutableMap<String,String?>): Int
+
     fun selectVersionList(): List<VersionVo>
 
 }

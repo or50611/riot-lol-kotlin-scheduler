@@ -25,4 +25,11 @@
 		FROM VERSION_INFO
 	</select>
 
+	<update id="updateVersionInfo" parameterType="map">
+		UPDATE VERSION_INFO
+		SET
+		VERSION = #{version}
+		WHERE TITLE = #{title}
+	</update>
+
 </mapper>

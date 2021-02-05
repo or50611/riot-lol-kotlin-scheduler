@@ -122,6 +122,13 @@ class ChampionDataImpl : ChampionDataService {
 
                 }
             }
+
+            val dataMap = mutableMapOf("title" to "champion", "version" to version?.champion)
+
+            versionMapper.updateVersionInfo(dataMap);
+
+            println("CHAMPION : "+version?.champion+" 업데이트 종료")
+
         }
 
     }

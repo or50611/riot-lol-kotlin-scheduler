@@ -4,6 +4,8 @@ import com.google.gson.Gson
 import com.springboot.riot.data.items.dto.ItemDto
 import com.springboot.riot.data.items.mapper.ItemMapper
 import com.springboot.riot.data.items.service.ItemDataService
+import com.springboot.riot.data.version.dto.VersionDto
+import com.springboot.riot.data.version.mapper.VersionMapper
 import com.springboot.riot.global.Globals
 import com.springboot.riot.global.common.RiotApiUtil
 import com.springboot.riot.global.common.RiotFileUtil
@@ -17,65 +19,87 @@ import javax.servlet.http.HttpServletRequest
 class ItemDataImpl: ItemDataService {
 
     @Autowired
+    lateinit var versionMapper: VersionMapper
+
+    @Autowired
     lateinit var itemMapper: ItemMapper
 
     override fun itemJsonInfo() {
-        val version = "11.1.1"
 
-        val request: HttpServletRequest = RiotApiUtil.getCurrentRequest()
-        val gson: Gson = Gson()
-        var itemDto: ItemDto? = ItemDto()
-        val input: InputStream = RiotApiUtil.getUrl(Globals.URL_JSON_DATA_PATH+version+"/data/ko_KR/item.json")
-        itemDto = gson.fromJson(InputStreamReader(input), ItemDto::class.java)
+        val findVersion = versionMapper.selectVersionList().firstOrNull { it.title == "item" }
 
-        val uploadPath: String = request.servletContext.getRealPath("riotImage/item/")
-        val imageDataPath: String = Globals.URL_JSON_DATA_PATH+version+"/img/item/"
+        val vGson = Gson()
+        val versionDto: VersionDto
+        val vInput: InputStream = RiotApiUtil.getUrl(Globals.URL_VERSION_JSON)
 
-        //아이템이미지데이터
-        itemDto.getDataProperties()?.forEach { e ->
-            RiotFileUtil.imageDownload(imageDataPath,uploadPath,e.key+".png")
-            println("key : "+e.key)
+        versionDto = vGson.fromJson(InputStreamReader(vInput), VersionDto::class.java)
+
+        versionDto.n.let { version ->
+            if(version?.item == findVersion?.version) {
+                return
+            }
+            println("ITEM : "+version?.item+" 업데이트 시작")
+
+            val request: HttpServletRequest = RiotApiUtil.getCurrentRequest()
+            val gson = Gson()
+            var itemDto: ItemDto? = ItemDto()
+            val input: InputStream = RiotApiUtil.getUrl(Globals.URL_JSON_DATA_PATH+version?.item+"/data/ko_KR/item.json")
+            itemDto = gson.fromJson(InputStreamReader(input), ItemDto::class.java)
+
+            val uploadPath: String = request.servletContext.getRealPath("riotImage/item/")
+            val imageDataPath: String = Globals.URL_JSON_DATA_PATH+version?.item+"/img/item/"
+
+            //아이템이미지데이터
+            itemDto.getDataProperties()?.forEach { e ->
+                RiotFileUtil.imageDownload(imageDataPath,uploadPath,e.key+".png")
+                println("key : "+e.key)
+            }
+
+            var dataMap:HashMap<String,String>
+            itemDto.getDataProperties()?.forEach { e ->
+                println("key : "+e.key)
+                e.value.key = e.key
+                e.value.gold?.key = e.key
+                e.value.image?.key = e.key
+                e.value.maps?.key = e.key
+
+                itemMapper.insertItemBasic(e.value)
+                e.value.gold?.let { itemMapper.insertItemGold(it) }
+                e.value.image?.let { itemMapper.insertItemImage(it) }
+                e.value.maps?.let { itemMapper.insertItemMaps(it) }
+
+                itemMapper.deleteItemTags(e.key)
+                e.value.tags?.forEach { str ->
+                    dataMap = HashMap()
+                    dataMap["key"] = e.key
+                    dataMap["tag"] = str
+                    itemMapper.insertItemTags(dataMap)
+                }
+
+                itemMapper.deleteItemInto(e.key)
+                e.value.into?.forEach { str ->
+                    dataMap = HashMap()
+                    dataMap["key"] = e.key
+                    dataMap["into"] = str
+                    itemMapper.insertItemInto(dataMap)
+                }
+
+                itemMapper.deleteItemStats(e.key)
+                e.value.getStatsProperties()?.forEach { stats ->
+                    dataMap = HashMap()
+                    dataMap["key"] = e.key
+                    dataMap["statsNm"] = stats.key
+                    dataMap["stats"] = stats.value.toString()
+                    itemMapper.insertItemStats(dataMap)
+                }
+
+            }
+
+            val itemMap = mutableMapOf("title" to "item", "version" to version?.item)
+
+            versionMapper.updateVersionInfo(itemMap);
+
+            println("ITEM : "+version?.item+" 업데이트 종료")
         }
-
-//        var dataMap:HashMap<String,String>
-//        itemDto.getDataProperties()?.forEach { e ->
-//            println("key : "+e.key)
-//            e.value.key = e.key
-//            e.value.gold?.key = e.key
-//            e.value.image?.key = e.key
-//            e.value.maps?.key = e.key
-//
-//            itemMapper.insertItemBasic(e.value)
-//            e.value.gold?.let { itemMapper.insertItemGold(it) }
-//            e.value.image?.let { itemMapper.insertItemImage(it) }
-//            e.value.maps?.let { itemMapper.insertItemMaps(it) }
-//
-//            itemMapper.deleteItemTags(e.key)
-//            e.value.tags?.forEach { str ->
-//                dataMap = HashMap()
-//                dataMap["key"] = e.key
-//                dataMap["tag"] = str
-//                itemMapper.insertItemTags(dataMap)
-//            }
-//
-//            itemMapper.deleteItemInto(e.key)
-//            e.value.into?.forEach { str ->
-//                dataMap = HashMap()
-//                dataMap["key"] = e.key
-//                dataMap["into"] = str
-//                itemMapper.insertItemInto(dataMap)
-//            }
-//
-//            itemMapper.deleteItemStats(e.key)
-//            e.value.getStatsProperties()?.forEach { stats ->
-//                dataMap = HashMap()
-//                dataMap["key"] = e.key
-//                dataMap["statsNm"] = stats.key
-//                dataMap["stats"] = stats.value.toString()
-//                itemMapper.insertItemStats(dataMap)
-//            }
-//
-//        }
-
     }
 }

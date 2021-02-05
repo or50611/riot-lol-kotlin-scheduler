@@ -197,7 +197,7 @@ class SummonerInfoImpl: SummonerService {
                                 itemList.forEach { item ->
                                     if(item.participantId == basic.participantId){
                                         when(item.itemId){
-                                            3854,3858,3862 -> botSupport = 5
+                                            3854,3858,3862,3850 -> botSupport = 5
                                             1035,1039 -> jungle = 5
                                         }
                                     }
@@ -293,4 +293,6 @@ class SummonerInfoImpl: SummonerService {
         dataMap["participantId"] = id
         summonerMapper.insertMatchTimeLineEventAssist(dataMap)
     }
+
+
 }

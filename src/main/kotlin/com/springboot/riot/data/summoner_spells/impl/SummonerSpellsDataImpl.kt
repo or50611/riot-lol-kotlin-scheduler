@@ -4,6 +4,8 @@ import com.google.gson.Gson
 import com.springboot.riot.data.summoner_spells.dto.SummonerSpellsDto
 import com.springboot.riot.data.summoner_spells.mapper.SummonerSpellsMapper
 import com.springboot.riot.data.summoner_spells.service.SummonerSpellsDataService
+import com.springboot.riot.data.version.dto.VersionDto
+import com.springboot.riot.data.version.mapper.VersionMapper
 import com.springboot.riot.global.Globals
 import com.springboot.riot.global.common.RiotApiUtil
 import com.springboot.riot.global.common.RiotFileUtil
@@ -17,30 +19,53 @@ import javax.servlet.http.HttpServletRequest
 class SummonerSpellsDataImpl: SummonerSpellsDataService {
 
     @Autowired
+    lateinit var versionMapper: VersionMapper
+
+    @Autowired
     lateinit var summonerSpellsMapper: SummonerSpellsMapper
 
     override fun summonerSpellsJsonInfo() {
-        val version = "11.1.1"
 
-        val request: HttpServletRequest = RiotApiUtil.getCurrentRequest()
-        val gson: Gson = Gson()
-        var summonerSpellsDto: SummonerSpellsDto? = SummonerSpellsDto()
-        val input: InputStream = RiotApiUtil.getUrl(Globals.URL_JSON_DATA_PATH+version+"/data/ko_KR/summoner.json")
-        summonerSpellsDto = gson.fromJson(InputStreamReader(input), SummonerSpellsDto::class.java)
+        val findVersion = versionMapper.selectVersionList().firstOrNull { it.title == "summoner" }
 
-        val uploadPath: String = request.servletContext.getRealPath("riotImage/summoner_spell/")
-        val imageDataPath: String = Globals.URL_JSON_DATA_PATH+version+"/img/spell/"
+        val vGson: Gson = Gson()
+        val versionDto: VersionDto
+        val vInput: InputStream = RiotApiUtil.getUrl(Globals.URL_VERSION_JSON)
 
-        //소환사스킬 데이터, 이미지
-        summonerSpellsDto.getDataProperties()?.forEach { e ->
-            e.value.image?.key = e.value.key
+        versionDto = vGson.fromJson(InputStreamReader(vInput), VersionDto::class.java)
 
-            summonerSpellsMapper.insertSummonerSpellsBasic(e.value)
-            e.value.image?.let { summonerSpellsMapper.insertSummonerSpellsImage(it) }
+        versionDto.n.let { version ->
+            if (version?.summoner == findVersion?.version) {
+                return
+            }
 
-            RiotFileUtil.imageDownload(imageDataPath,uploadPath,e.key+".png")
-            println("key : "+e.key)
+            val request: HttpServletRequest = RiotApiUtil.getCurrentRequest()
+            val gson: Gson = Gson()
+            var summonerSpellsDto: SummonerSpellsDto? = SummonerSpellsDto()
+            val input: InputStream = RiotApiUtil.getUrl(Globals.URL_JSON_DATA_PATH+version?.summoner+"/data/ko_KR/summoner.json")
+            summonerSpellsDto = gson.fromJson(InputStreamReader(input), SummonerSpellsDto::class.java)
+
+            val uploadPath: String = request.servletContext.getRealPath("riotImage/summoner_spell/")
+            val imageDataPath: String = Globals.URL_JSON_DATA_PATH+version?.summoner+"/img/spell/"
+
+            //소환사스킬 데이터, 이미지
+            summonerSpellsDto.getDataProperties()?.forEach { e ->
+                e.value.image?.key = e.value.key
+
+                summonerSpellsMapper.insertSummonerSpellsBasic(e.value)
+                e.value.image?.let { summonerSpellsMapper.insertSummonerSpellsImage(it) }
+
+                RiotFileUtil.imageDownload(imageDataPath,uploadPath,e.key+".png")
+                println("key : "+e.key)
+            }
+
+            val dataMap = mutableMapOf("title" to "summoner", "version" to version?.summoner)
+
+            versionMapper.updateVersionInfo(dataMap);
+
+            println("SUMMONER : "+version?.summoner+" 업데이트 종료")
         }
+
 
     }
 }
