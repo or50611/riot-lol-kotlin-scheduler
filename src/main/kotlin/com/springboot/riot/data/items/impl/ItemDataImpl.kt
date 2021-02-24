@@ -9,6 +9,8 @@ import com.springboot.riot.data.version.mapper.VersionMapper
 import com.springboot.riot.global.Globals
 import com.springboot.riot.global.common.RiotApiUtil
 import com.springboot.riot.global.common.RiotFileUtil
+import org.slf4j.Logger
+import org.slf4j.LoggerFactory
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.stereotype.Service
 import java.io.InputStream
@@ -17,6 +19,8 @@ import javax.servlet.http.HttpServletRequest
 
 @Service
 class ItemDataImpl: ItemDataService {
+
+    var logger: Logger = LoggerFactory.getLogger(ItemDataService::class.java)
 
     @Autowired
     lateinit var versionMapper: VersionMapper
@@ -38,15 +42,14 @@ class ItemDataImpl: ItemDataService {
             if(version?.item == findVersion?.version) {
                 return
             }
-            println("ITEM : "+version?.item+" 업데이트 시작")
+            logger.info("ITEM 업데이트 시작 : {}", version?.item)
 
-            val request: HttpServletRequest = RiotApiUtil.getCurrentRequest()
             val gson = Gson()
             var itemDto: ItemDto? = ItemDto()
             val input: InputStream = RiotApiUtil.getUrl(Globals.URL_JSON_DATA_PATH+version?.item+"/data/ko_KR/item.json")
             itemDto = gson.fromJson(InputStreamReader(input), ItemDto::class.java)
 
-            val uploadPath: String = request.servletContext.getRealPath("riotImage/item/")
+            val uploadPath: String = RiotApiUtil.getDirPath("riotImage/item/")
             val imageDataPath: String = Globals.URL_JSON_DATA_PATH+version?.item+"/img/item/"
 
             //아이템이미지데이터
@@ -99,7 +102,7 @@ class ItemDataImpl: ItemDataService {
 
             versionMapper.updateVersionInfo(itemMap);
 
-            println("ITEM : "+version?.item+" 업데이트 종료")
+            logger.info("ITEM 업데이트 종료 : {}", version?.item)
         }
     }
 }

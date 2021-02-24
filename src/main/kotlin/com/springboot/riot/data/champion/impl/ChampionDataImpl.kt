@@ -9,14 +9,23 @@ import com.springboot.riot.data.version.mapper.VersionMapper
 import com.springboot.riot.global.Globals
 import com.springboot.riot.global.common.RiotApiUtil
 import com.springboot.riot.global.common.RiotFileUtil
+import org.slf4j.Logger
+import org.slf4j.LoggerFactory
 import org.springframework.beans.factory.annotation.Autowired
+import org.springframework.beans.factory.annotation.Value
 import org.springframework.stereotype.Service
+import org.springframework.web.context.request.RequestContextHolder
+import org.springframework.web.context.request.ServletRequestAttributes
 import java.io.InputStream
 import java.io.InputStreamReader
+import java.util.*
 import javax.servlet.http.HttpServletRequest
+import kotlin.collections.HashMap
 
 @Service
 class ChampionDataImpl : ChampionDataService {
+
+    var logger: Logger = LoggerFactory.getLogger(ChampionDataService::class.java)
 
     @Autowired
     lateinit var versionMapper: VersionMapper
@@ -25,7 +34,6 @@ class ChampionDataImpl : ChampionDataService {
     lateinit var championMapper: ChampionMapper
 
     override fun championJsonInfo() {
-
 
         val findVersion = versionMapper.selectVersionList().firstOrNull { it.title == "champion" }
 
@@ -39,17 +47,14 @@ class ChampionDataImpl : ChampionDataService {
             if(version?.champion == findVersion?.version) {
                 return
             }
-            println("CHAMPION : "+version?.champion+" 업데이트 시작")
+            logger.info("CHAMPION 업데이트 시작 : {}", version?.champion)
 
-            val request:HttpServletRequest = RiotApiUtil.getCurrentRequest()
             val gson = Gson()
             val championDto: ChampionDto?
             val input:InputStream = RiotApiUtil.getUrl(Globals.URL_JSON_DATA_PATH+version?.champion+"/data/ko_KR/champion.json")
             championDto = gson.fromJson(InputStreamReader(input), ChampionDto::class.java)
-
-            val uploadPath: String = request.servletContext.getRealPath("riotImage/champion/")
+            val uploadPath: String = RiotApiUtil.getDirPath("riotImage/champion/")
             val imageDataPath: String = Globals.URL_JSON_DATA_PATH+version?.champion+"/img/champion/"
-
             //챔피언이미지데이터
             championDto.getAdditionalProperties()?.forEach { e ->
                 RiotFileUtil.imageDownload(imageDataPath,uploadPath,e.key+".png")
@@ -79,10 +84,10 @@ class ChampionDataImpl : ChampionDataService {
             var inSpells: InputStream
             var championSpellDto: ChampionDto?
 
-            val spellsUploadPath: String = request.servletContext.getRealPath("riotImage/spells/")
+            val spellsUploadPath: String = RiotApiUtil.getDirPath("riotImage/spells/")
             val spellsImagePath: String = Globals.URL_JSON_DATA_PATH + version?.champion + "/img/spell/"
 
-            val passiveUploadPath: String = request.servletContext.getRealPath("riotImage/passive/")
+            val passiveUploadPath: String = RiotApiUtil.getDirPath("riotImage/passive/")
             val passiveImagePath: String = Globals.URL_JSON_DATA_PATH + version?.champion + "/img/passive/"
 
             var imgNm: String?
@@ -127,7 +132,7 @@ class ChampionDataImpl : ChampionDataService {
 
             versionMapper.updateVersionInfo(dataMap);
 
-            println("CHAMPION : "+version?.champion+" 업데이트 종료")
+            logger.info("CHAMPION 업데이트 종료 : {}", version?.champion)
 
         }
 

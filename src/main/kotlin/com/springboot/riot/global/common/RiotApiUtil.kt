@@ -3,7 +3,7 @@ package com.springboot.riot.global.common
 import org.springframework.http.HttpEntity
 import org.springframework.http.HttpHeaders
 import com.springboot.riot.global.Globals
-import com.springboot.riot.global.RiotApiKey
+import com.springboot.riot.global.RiotApiPrivate
 import org.springframework.web.context.request.RequestContextHolder
 import org.springframework.web.context.request.ServletRequestAttributes
 import java.io.InputStream
@@ -17,7 +17,7 @@ class RiotApiUtil {
 		fun <T> setHeaders(): HttpEntity<T> {
 			var headers = HttpHeaders()
 			headers.set(HttpHeaders.ORIGIN, Globals.RIOT_URL)
-			headers.set(Globals.X_RIOT_TOKEN, RiotApiKey.API_KEY)
+			headers.set(Globals.X_RIOT_TOKEN, RiotApiPrivate.API_KEY)
 					
 			return HttpEntity<T>(headers)
 		}
@@ -31,6 +31,10 @@ class RiotApiUtil {
 		fun getCurrentRequest(): HttpServletRequest {
 			val sra: ServletRequestAttributes = RequestContextHolder.currentRequestAttributes() as ServletRequestAttributes
 			return sra.request
+		}
+
+		fun getDirPath(path: String): String {
+			return RiotApiPrivate.SERVER_TOMCAT_DIR+path
 		}
 	}
 	

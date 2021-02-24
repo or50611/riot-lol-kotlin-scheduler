@@ -10,6 +10,8 @@ import com.springboot.riot.data.version.mapper.VersionMapper
 import com.springboot.riot.global.Globals
 import com.springboot.riot.global.common.RiotApiUtil
 import com.springboot.riot.global.common.RiotFileUtil
+import org.slf4j.Logger
+import org.slf4j.LoggerFactory
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.stereotype.Service
 import java.io.InputStream
@@ -18,6 +20,8 @@ import javax.servlet.http.HttpServletRequest
 
 @Service
 class RuneDataImpl: RuneDataService {
+
+    var logger: Logger = LoggerFactory.getLogger(RuneDataService::class.java)
 
     @Autowired
     lateinit var versionMapper: VersionMapper
@@ -39,13 +43,13 @@ class RuneDataImpl: RuneDataService {
             if (version?.rune == findVersion?.version) {
                 return
             }
+            logger.info("RUNE 업데이트 시작 : {}", version?.rune)
 
-            val request: HttpServletRequest = RiotApiUtil.getCurrentRequest()
             val gson: Gson = Gson()
 
             var runeDto: RuneDto
             val input: InputStream = RiotApiUtil.getUrl(Globals.URL_JSON_DATA_PATH+version?.rune+"/data/ko_KR/runesReforged.json")
-            val uploadPath: String = request.servletContext.getRealPath("riotImage/rune/")
+            val uploadPath: String = RiotApiUtil.getDirPath("riotImage/rune/")
             val imageDataPath: String = Globals.URL_JSON_DATA_PATH+"img/"
 
             var iconSplit: String? = null

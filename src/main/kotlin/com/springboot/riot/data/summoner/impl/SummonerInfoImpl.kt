@@ -6,6 +6,8 @@ import com.springboot.riot.data.summoner.service.SummonerService
 import com.springboot.riot.data.summoner.vo.SummonerInfoVo
 import com.springboot.riot.global.Globals
 import com.springboot.riot.global.common.RiotApiUtil
+import org.slf4j.Logger
+import org.slf4j.LoggerFactory
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.boot.web.client.RestTemplateBuilder
 import org.springframework.http.HttpEntity
@@ -13,10 +15,11 @@ import org.springframework.http.HttpMethod
 import org.springframework.http.ResponseEntity
 import org.springframework.stereotype.Service
 import org.springframework.web.client.RestTemplate
-import java.time.LocalDateTime
 
 @Service
 class SummonerInfoImpl: SummonerService {
+
+    var logger: Logger = LoggerFactory.getLogger(SummonerService::class.java)
 
     @Autowired
     lateinit var summonerMapper: SummonerMapper
@@ -49,10 +52,9 @@ class SummonerInfoImpl: SummonerService {
                 val count = summonerMapper.selectMatchReferenceOne(dataMap)
 
                 if(count == 0){
-                    var time: LocalDateTime = LocalDateTime.now()
 
-                    println("=======================================================")
-                    println("START : "+time+", GAME_ID : "+matchInfo.gameId)
+                    logger.info("=======================================================")
+                    logger.info("START GAME_ID : {}", matchInfo.gameId)
                     matchInfo.accountId = vo.accountId
 
                     val basicCount = summonerMapper.selectMatchBasicOne(dataMap)
@@ -287,8 +289,7 @@ class SummonerInfoImpl: SummonerService {
                         }
                     }
 
-                    time = LocalDateTime.now()
-                    println("END : "+time+", GAME_ID : "+matchInfo.gameId)
+                    logger.info("END GAME_ID : {}", matchInfo.gameId)
                 }
             }
         }
