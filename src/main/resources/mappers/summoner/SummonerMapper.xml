@@ -713,6 +713,7 @@
 		UPDATE MATCH_PARTICIPANT_TIMELINE
 		SET
 		LANE = #{lane}
+		LANE_SEQ = #{laneSeq}
 		WHERE GAME_ID = #{gameId}
 		AND	  PARTICIPANT_ID = #{participantId}
 	</update>

@@ -247,10 +247,20 @@ class SummonerInfoImpl: SummonerService {
                                 val sortList = laneMap.toList().sortedWith(compareByDescending { sort -> sort.second }).first()
                                 checkList.add(sortList.first)
 
+                                var laneSeq = 0
+                                when(sortList.first) {
+                                    "TOP" -> laneSeq = 1
+                                    "JUNGLE" -> laneSeq = 2
+                                    "MID" -> laneSeq = 3
+                                    "BOT_CARRY" -> laneSeq = 4
+                                    "BOT_SUPPORT" -> laneSeq = 5
+                                }
+
                                 val mMap = HashMap<String,Any>()
                                 mMap["gameId"] = it.gameId
                                 mMap["participantId"] = basic.participantId
                                 mMap["lane"] = sortList.first
+                                mMap["laneSeq"] = laneSeq
                                 mMap["champion"] = basic.championId
                                 mMap["accountId"] = basic.accountId ?: ""
 
