@@ -34,31 +34,31 @@ class BatchBaseScheduler {
 
     @Scheduled(fixedDelay = 3600000)
     fun championDataUpdate() {
-        logger.info("championDataUpdate 호출 : {} "+Date())
+        logger.info("championDataUpdate 호출 : {} ", Date())
         championDataService.championJsonInfo()
     }
 
     @Scheduled(fixedDelay = 3600000)
     fun itemDataUpdate() {
-        logger.info("itemDataUpdate 호출 : {} "+Date())
+        logger.info("itemDataUpdate 호출 : {} ", Date())
         itemDataService.itemJsonInfo()
     }
 
     @Scheduled(fixedDelay = 3600000)
     fun runeDataUpdate() {
-        logger.info("runeDataUpdate 호출 : {} "+Date())
+        logger.info("runeDataUpdate 호출 : {} ", Date())
         runeDataService.runeJsonInfo()
     }
 
     @Scheduled(fixedDelay = 3600000)
     fun summonerSpellsDataUpdate() {
-        logger.info("summonerSpellsDataUpdate 호출 : {} "+Date())
+        logger.info("summonerSpellsDataUpdate 호출 : {} ", Date())
         summonerSpellsDataService.summonerSpellsJsonInfo()
     }
 
     @Scheduled(fixedDelay = 600000)
     fun matchUpdate() {
-        logger.info("matchUpdate 호출 : {} "+Date())
+        logger.info("matchUpdate 호출 : {} ", Date())
         summonerService.summonerJsonInfo()
     }
 
