@@ -14,6 +14,8 @@ object Globals {
 
     const val API_MATCH_TIMELINE_INFO = "https://kr.api.riotgames.com/lol/match/v4/timelines/by-match/"
 
+    const val API_LEAGUE_ENTRY_INFO = "https://kr.api.riotgames.com/lol/league/v4/entries/by-summoner/"
+
     const val URL_JSON_DATA_PATH = "http://ddragon.leagueoflegends.com/cdn/"
 
 	const val URL_VERSION_JSON = "https://ddragon.leagueoflegends.com/realms/na.json"
