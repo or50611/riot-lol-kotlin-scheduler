@@ -1,6 +1,7 @@
 package com.springboot.riot.data.dto
 
 data class LeagueEntryDto(
+    var accountId: String? = null,
     var leagueId: String? = null,
     var queueType: String? = null,
     var tier: String? = null,

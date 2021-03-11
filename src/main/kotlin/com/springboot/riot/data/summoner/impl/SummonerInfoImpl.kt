@@ -1,5 +1,7 @@
 package com.springboot.riot.data.summoner.impl
 
+import com.springboot.riot.data.dto.LeagueEntryListDto
+import com.springboot.riot.data.league.mapper.LeagueMapper
 import com.springboot.riot.data.summoner.dto.*
 import com.springboot.riot.data.summoner.mapper.SummonerMapper
 import com.springboot.riot.data.summoner.service.SummonerService
@@ -23,6 +25,9 @@ class SummonerInfoImpl: SummonerService {
 
     @Autowired
     lateinit var summonerMapper: SummonerMapper
+
+    @Autowired
+    lateinit var leagueMapper: LeagueMapper
 
     private val restTemplate: RestTemplate
 
@@ -111,10 +116,29 @@ class SummonerInfoImpl: SummonerService {
 
                             it.participantIdentities?.forEach { participantIdentities ->
 
-                                participantIdentities.player?.gameId = it.gameId
-                                participantIdentities.player?.participantId = participantIdentities.participantId
+                                participantIdentities.player?.let { player ->
+                                    player.gameId = it.gameId
+                                    player.participantId = participantIdentities.participantId
 
-                                participantIdentities.player?.let { player -> summonerMapper.insertMatchParticipantIdentities(player) }
+                                    summonerMapper.insertMatchParticipantIdentities(player)
+
+                                    val leagueEntryListDto: LeagueEntryListDto?
+
+                                    val leagueEntryEntity: ResponseEntity<LeagueEntryListDto> = restTemplate.exchange(Globals.API_LEAGUE_ENTRY_INFO + participantIdentities.player?.summonerId, HttpMethod.GET, httpEntity, LeagueEntryListDto::class.java)
+                                    leagueEntryListDto = leagueEntryEntity.body
+
+
+                                    //
+                                    leagueEntryListDto?.forEach { entry ->
+                                        entry.accountId = player.accountId
+
+                                        leagueMapper.insertLeagueEntry(entry)
+
+
+                                    }
+
+                                }
+
                             }
 
                             //매치타임라인정보
