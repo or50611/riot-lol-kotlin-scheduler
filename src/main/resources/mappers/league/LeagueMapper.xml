@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.springboot.riot.data.league.mapper.LeagueMapper">
+
+	<insert id="insertLeagueEntry" parameterType="com.springboot.riot.data.dto.LeagueEntryDto">
+		INSERT INTO SUMMONER_LEAGUE_ENTRY
+		(
+		GAME_ID
+		, PARTICIPANT_ID
+		, ACCOUNT_ID
+		, LEAGUE_ID
+		, QUEUE_TYPE
+		, TIER
+		, RANK
+		, SUMMONER_ID
+		, SUMMONER_NAME
+		, LEAGUE_POINTS
+		, WINS
+		, LOSSES
+		, VETERAN
+		, INACTIVE
+		, FRESH_BLOOD
+		, HOT_STREAK
+		, REG_DATE
+		) VALUES (
+		#{gameId}
+		, #{participantId}
+		, #{accountId}
+		, #{leagueId}
+		, #{queueType}
+		, #{tier}
+		, #{rank}
+		, #{summonerId}
+		, #{summonerName}
+		, #{leaguePoints}
+		, #{wins}
+		, #{losses}
+		, #{veteran}
+		, #{inactive}
+		, #{freshBlood}
+		, #{hotStreak}
+		, NOW()
+		)
+	</insert>
+
+</mapper>

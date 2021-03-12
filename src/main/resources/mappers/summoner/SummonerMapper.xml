@@ -428,6 +428,8 @@
 			GAME_ID
 			, PARTICIPANT_ID
 			, PLATFORM_ID
+			, TIER
+			, RANK
 			, ACCOUNT_ID
 			, SUMMONER_NAME
 			, SUMMONER_ID
@@ -440,6 +442,8 @@
 			#{gameId}
 			, #{participantId}
 			, #{platformId}
+			, #{tier}
+			, #{rank}
 			, #{accountId}
 			, #{summonerName}
 			, #{summonerId}

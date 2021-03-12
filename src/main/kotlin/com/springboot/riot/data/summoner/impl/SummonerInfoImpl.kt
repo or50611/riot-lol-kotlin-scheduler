@@ -120,22 +120,24 @@ class SummonerInfoImpl: SummonerService {
                                     player.gameId = it.gameId
                                     player.participantId = participantIdentities.participantId
 
-                                    summonerMapper.insertMatchParticipantIdentities(player)
-
                                     val leagueEntryListDto: LeagueEntryListDto?
-
-                                    val leagueEntryEntity: ResponseEntity<LeagueEntryListDto> = restTemplate.exchange(Globals.API_LEAGUE_ENTRY_INFO + participantIdentities.player?.summonerId, HttpMethod.GET, httpEntity, LeagueEntryListDto::class.java)
+                                    val leagueEntryEntity: ResponseEntity<LeagueEntryListDto> = restTemplate.exchange(Globals.API_LEAGUE_ENTRY_INFO + participantIdentities.player.summonerId, HttpMethod.GET, httpEntity, LeagueEntryListDto::class.java)
                                     leagueEntryListDto = leagueEntryEntity.body
 
-
-                                    //
                                     leagueEntryListDto?.forEach { entry ->
-                                        entry.accountId = player.accountId
+                                        player.tier = entry.tier
+                                        player.rank = entry.rank
 
+                                        entry.gameId = player.gameId
+                                        entry.participantId = player.participantId
+                                        entry.accountId = player.accountId
                                         leagueMapper.insertLeagueEntry(entry)
 
-
                                     }
+
+                                    summonerMapper.insertMatchParticipantIdentities(player)
+
+
 
                                 }
 
