@@ -50,6 +50,11 @@ class SummonerInfoImpl: SummonerService {
             matchListDto = matchListEntity.body
 
             matchListDto?.matches?.forEach { matchInfo ->
+                if(matchInfo.queue != 420){
+                    return@forEach
+                }
+
+
                 dataMap = HashMap()
                 dataMap["accountId"] = vo.accountId
                 dataMap["gameId"] = matchInfo.gameId
@@ -125,14 +130,15 @@ class SummonerInfoImpl: SummonerService {
                                     leagueEntryListDto = leagueEntryEntity.body
 
                                     leagueEntryListDto?.forEach { entry ->
-                                        player.tier = entry.tier
-                                        player.rank = entry.rank
+                                        if(entry.queueType == "RANKED_SOLO_5x5"){
+                                            player.tier = entry.tier
+                                            player.rank = entry.rank
 
-                                        entry.gameId = player.gameId
-                                        entry.participantId = player.participantId
-                                        entry.accountId = player.accountId
-                                        leagueMapper.insertLeagueEntry(entry)
-
+                                            entry.gameId = player.gameId
+                                            entry.participantId = player.participantId
+                                            entry.accountId = player.accountId
+                                            leagueMapper.insertLeagueEntry(entry)
+                                        }
                                     }
 
                                     summonerMapper.insertMatchParticipantIdentities(player)
