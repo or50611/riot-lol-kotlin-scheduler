@@ -303,7 +303,12 @@ class SummonerInfoImpl: SummonerService {
                                 laneList.add(mMap)
                             }
                         }
+                    } else {
+                        summonerMapper.updateMatchEnemyChampion(dataMap)
+                        logger.info("중복게임. ENEMY_CHAMPION UPDATE")
                     }
+
+
                     summonerMapper.insertMatchReference(matchInfo)
 
                     val findSummonerMap = laneList.firstOrNull{ it["accountId"] == matchInfo.accountId}

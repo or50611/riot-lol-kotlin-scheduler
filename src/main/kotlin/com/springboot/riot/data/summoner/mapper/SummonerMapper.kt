@@ -56,4 +56,7 @@ interface SummonerMapper {
     fun updateParticipantLane(map: HashMap<String,Any>): Int
     fun updateSummonerMatchLane(map: HashMap<String,Any?>): Int
 
+    //적챔피언업데이트
+    fun updateMatchEnemyChampion(map: HashMap<String,Any?>): Int
+
 }
