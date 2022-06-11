@@ -37,7 +37,13 @@ class SummonerInfoImpl: SummonerService {
 
     var httpEntity: HttpEntity<SummonerDto> = RiotApiUtil.setHeaders()
 
-    override fun summonerJsonInfo() {
+    override fun summonerJsonInfoV5() {
+        val summonerInfoVo: List<SummonerInfoVo> = summonerMapper.selectSummonerList()
+        
+
+    }
+
+    override fun summonerJsonInfoV4() {
 
         val summonerInfoVo: List<SummonerInfoVo> = summonerMapper.selectSummonerList()
 

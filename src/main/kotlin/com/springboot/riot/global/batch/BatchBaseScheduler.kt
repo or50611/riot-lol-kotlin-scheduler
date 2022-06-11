@@ -59,7 +59,7 @@ class BatchBaseScheduler {
     @Scheduled(fixedDelay = 600000)
     fun matchUpdate() {
         logger.info("matchUpdate 호출 : {} ", Date())
-        summonerService.summonerJsonInfo()
+        summonerService.summonerJsonInfoV4()
     }
 
 }

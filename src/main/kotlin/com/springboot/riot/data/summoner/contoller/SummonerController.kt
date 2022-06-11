@@ -13,7 +13,7 @@ class SummonerController {
 
     @RequestMapping("/summoner")
     fun summonerInfo(): String {
-        summonerService.summonerJsonInfo()
+        summonerService.summonerJsonInfoV4()
 
         return ""
     }
