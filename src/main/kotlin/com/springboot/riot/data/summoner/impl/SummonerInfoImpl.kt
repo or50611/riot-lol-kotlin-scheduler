@@ -39,9 +39,29 @@ class SummonerInfoImpl: SummonerService {
 
     override fun summonerJsonInfoV5() {
         
-        val summonerInfoVo: List<SummonerInfoVo> = summonerMapper.selectSummonerList()
-        
+        //val summonerInfoVo: List<SummonerInfoVo> = summonerMapper.selectSummonerList()
 
+        var matchListV5Dto: MatchListV5Dto?
+        var dataMap: HashMap<String, Any?>
+
+        val matchListEntity: ResponseEntity<MatchListV5Dto> = restTemplate.exchange(Globals.API_MATCH_LISTS_V5 + "n2iPt1_9oJLN6Y9O2VFB3mnLhdAigdBGwsjNK-CaivfQu3szVb3BO_FiXg2M3vnAnuZa663Lpt7SBw" + "/ids?start=0&count=5", HttpMethod.GET, httpEntity, MatchListV5Dto::class.java)
+        matchListV5Dto = matchListEntity.body
+
+        println("--list_v5 : $matchListV5Dto")
+
+        matchListV5Dto?.forEach {matchId ->
+
+            dataMap = HashMap()
+            dataMap["puuid"] = "n2iPt1_9oJLN6Y9O2VFB3mnLhdAigdBGwsjNK-CaivfQu3szVb3BO_FiXg2M3vnAnuZa663Lpt7SBw"
+            dataMap["matchId"] = matchId
+
+            val count = summonerMapper.selectMatchReferenceOneV5(dataMap)
+
+            if(count == 0) {
+                
+            }
+
+        }
     }
 
     override fun summonerJsonInfoV4() {

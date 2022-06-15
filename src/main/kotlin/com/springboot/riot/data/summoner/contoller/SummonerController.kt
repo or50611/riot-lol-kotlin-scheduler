@@ -18,4 +18,11 @@ class SummonerController {
         return ""
     }
 
+    @RequestMapping("/summonerV5")
+    fun summonerInfoV5(): String {
+        summonerService.summonerJsonInfoV5()
+
+        return ""
+    }
+
 }

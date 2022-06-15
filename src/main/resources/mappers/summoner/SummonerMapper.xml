@@ -28,6 +28,13 @@
 		AND   GAME_ID = #{gameId}
 	</select>
 
+	<select id="selectMatchReferenceOneV5" parameterType="hashMap" resultType="Int">
+		SELECT COUNT(*)
+		FROM SUMMONER_MATCH_INFO
+		WHERE puuid = #{puuid}
+		AND   MATCH_ID = #{matchId}
+	</select>
+
 	<select id="selectMatchBasicOne" parameterType="hashMap" resultType="Int">
 		SELECT COUNT(*)
 		FROM MATCH_BASIC
