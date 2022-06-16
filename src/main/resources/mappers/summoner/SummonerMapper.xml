@@ -41,6 +41,12 @@
 		WHERE GAME_ID = #{gameId}
 	</select>
 
+	<select id="selectMatchBasicOneV5" parameterType="hashMap" resultType="Int">
+		SELECT COUNT(*)
+		FROM MATCH_BASIC
+		WHERE MATCH_ID = #{matchId}
+	</select>
+
 	<insert id="insertMatchReference" parameterType="com.springboot.riot.data.summoner.dto.MatchReferenceDto">
 		INSERT INTO SUMMONER_MATCH_INFO
 		(

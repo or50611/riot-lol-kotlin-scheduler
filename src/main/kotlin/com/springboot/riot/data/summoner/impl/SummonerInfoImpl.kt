@@ -3,6 +3,7 @@ package com.springboot.riot.data.summoner.impl
 import com.springboot.riot.data.dto.LeagueEntryListDto
 import com.springboot.riot.data.league.mapper.LeagueMapper
 import com.springboot.riot.data.summoner.dto.*
+import com.springboot.riot.data.summoner.dto.v5.MatchListV5Dto
 import com.springboot.riot.data.summoner.mapper.SummonerMapper
 import com.springboot.riot.data.summoner.service.SummonerService
 import com.springboot.riot.data.summoner.vo.SummonerInfoVo
@@ -44,10 +45,10 @@ class SummonerInfoImpl: SummonerService {
         var matchListV5Dto: MatchListV5Dto?
         var dataMap: HashMap<String, Any?>
 
+
+        //매치리스트
         val matchListEntity: ResponseEntity<MatchListV5Dto> = restTemplate.exchange(Globals.API_MATCH_LISTS_V5 + "n2iPt1_9oJLN6Y9O2VFB3mnLhdAigdBGwsjNK-CaivfQu3szVb3BO_FiXg2M3vnAnuZa663Lpt7SBw" + "/ids?start=0&count=5", HttpMethod.GET, httpEntity, MatchListV5Dto::class.java)
         matchListV5Dto = matchListEntity.body
-
-        println("--list_v5 : $matchListV5Dto")
 
         matchListV5Dto?.forEach {matchId ->
 
@@ -58,7 +59,19 @@ class SummonerInfoImpl: SummonerService {
             val count = summonerMapper.selectMatchReferenceOneV5(dataMap)
 
             if(count == 0) {
-                
+
+                logger.info("=======================================================")
+                logger.info("START MATCH_ID : {}", matchId)
+
+                val basicCount = summonerMapper.selectMatchBasicOneV5(dataMap)
+
+                if(basicCount == 0){
+                    //게임상세정보
+
+
+
+                }
+
             }
 
         }

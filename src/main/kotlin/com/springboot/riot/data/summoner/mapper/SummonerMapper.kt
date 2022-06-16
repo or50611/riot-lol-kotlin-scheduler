@@ -15,6 +15,8 @@ interface SummonerMapper {
 
     fun selectMatchBasicOne(dataMap: HashMap<String, Any?>): Int
 
+    fun selectMatchBasicOneV5(dataMap: HashMap<String, Any?>): Int
+
     fun insertMatchReference(matchReferenceDto: MatchReferenceDto): Int
 
     fun insertMatchBasic(matchDto: MatchDto): Int
