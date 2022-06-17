@@ -109,5 +109,5 @@ class MatchInfoParticipantsV5Dto {
     val win: Boolean = false
 
     val challenges: MatchPartChallengesV5Dto? = null
-    val perks: List<MatchPartPerksV5Dto>? = null
+    val perks: MatchPartPerksV5Dto? = null
 }
