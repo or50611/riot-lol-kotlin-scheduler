@@ -4,6 +4,7 @@ import com.springboot.riot.data.dto.LeagueEntryListDto
 import com.springboot.riot.data.league.mapper.LeagueMapper
 import com.springboot.riot.data.summoner.dto.*
 import com.springboot.riot.data.summoner.dto.v5.MatchListV5Dto
+import com.springboot.riot.data.summoner.dto.v5.MatchV5Dto
 import com.springboot.riot.data.summoner.mapper.SummonerMapper
 import com.springboot.riot.data.summoner.service.SummonerService
 import com.springboot.riot.data.summoner.vo.SummonerInfoVo
@@ -45,15 +46,16 @@ class SummonerInfoImpl: SummonerService {
         var matchListV5Dto: MatchListV5Dto?
         var dataMap: HashMap<String, Any?>
 
+        val puuid = "n2iPt1_9oJLN6Y9O2VFB3mnLhdAigdBGwsjNK-CaivfQu3szVb3BO_FiXg2M3vnAnuZa663Lpt7SBw"
 
         //매치리스트
-        val matchListEntity: ResponseEntity<MatchListV5Dto> = restTemplate.exchange(Globals.API_MATCH_LISTS_V5 + "n2iPt1_9oJLN6Y9O2VFB3mnLhdAigdBGwsjNK-CaivfQu3szVb3BO_FiXg2M3vnAnuZa663Lpt7SBw" + "/ids?start=0&count=5", HttpMethod.GET, httpEntity, MatchListV5Dto::class.java)
+        val matchListEntity: ResponseEntity<MatchListV5Dto> = restTemplate.exchange(Globals.API_MATCH_LISTS_V5 + puuid + "/ids?start=0&count=1", HttpMethod.GET, httpEntity, MatchListV5Dto::class.java)
         matchListV5Dto = matchListEntity.body
 
         matchListV5Dto?.forEach {matchId ->
 
             dataMap = HashMap()
-            dataMap["puuid"] = "n2iPt1_9oJLN6Y9O2VFB3mnLhdAigdBGwsjNK-CaivfQu3szVb3BO_FiXg2M3vnAnuZa663Lpt7SBw"
+            dataMap["puuid"] = puuid
             dataMap["matchId"] = matchId
 
             val count = summonerMapper.selectMatchReferenceOneV5(dataMap)
@@ -67,7 +69,37 @@ class SummonerInfoImpl: SummonerService {
 
                 if(basicCount == 0){
                     //게임상세정보
+                    val matchEntity: ResponseEntity<MatchV5Dto> = restTemplate.exchange(Globals.API_MATCH_INFO_V5 + matchId, HttpMethod.GET, httpEntity, MatchV5Dto::class.java)
+                    val matchV5Dto: MatchV5Dto? = matchEntity.body
 
+                    matchV5Dto?.info?.let {info ->
+                        //summonerMapper.insertMatchBasic(it)
+                        println(info)
+
+                        //매치 기본정보
+                        println(info)
+
+                        //매치 잠가자
+                        println(info?.participants)
+                        info?.participants?.forEach {participants ->
+
+                            //매치참가자 챌린지
+                            participants.challenges
+
+                            participants.perks?.statPerks
+                            participants.perks?.styles?.forEach { styles ->
+
+                                styles.selections?.forEach { selections ->
+
+                                }
+                            }
+                        }
+
+
+
+                        println(info?.teams)
+
+                    }
 
 
                 }
