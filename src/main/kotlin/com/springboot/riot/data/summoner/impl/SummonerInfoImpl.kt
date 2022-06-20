@@ -72,40 +72,80 @@ class SummonerInfoImpl: SummonerService {
                     val matchEntity: ResponseEntity<MatchV5Dto> = restTemplate.exchange(Globals.API_MATCH_INFO_V5 + matchId, HttpMethod.GET, httpEntity, MatchV5Dto::class.java)
                     val matchV5Dto: MatchV5Dto? = matchEntity.body
 
-                    matchV5Dto?.info?.let {info ->
-                        //summonerMapper.insertMatchBasic(it)
-                        println(info)
+                    matchV5Dto?.info?.let { info ->
+                        info.matchId = matchId
 
                         //매치 기본정보
-                        println(info)
+                        //summonerMapper.insertMatchBasicV5(info)
+
 
                         //매치 잠가자
                         println(info?.participants)
-                        info?.participants?.forEach {participants ->
+                        info?.participants?.forEach { participants ->
+                            participants.matchId = info.matchId
 
                             //매치참가자 챌린지
                             participants.challenges
 
-                            participants.perks?.statPerks
-                            participants.perks?.styles?.forEach { styles ->
-
-                                styles.selections?.forEach { selections ->
-
+                            participants.perks?.let { perks ->
+                                perks.statPerks?.let {statPerks ->
+                                    participants.statPerkDefense = statPerks.defense
+                                    participants.statPerkFlex = statPerks.flex
+                                    participants.statPerkOffense = statPerks.offense
                                 }
+
+                                perks.styles?.forEach { styles ->
+                                    when(styles.description) {
+                                        "primaryStyle" -> participants.perkPrimaryStyle = styles.style
+                                        "subStyle" -> participants.perkSubStyle = styles.style
+                                    }
+
+                                    styles.selections?.forEachIndexed { index, selections ->
+                                        selections.matchId = participants.matchId
+                                        selections.gameId = participants.gameId
+                                        selections.description = styles.description
+                                        selections.participantId = participants.participantId
+                                        selections.style = styles.style
+                                        selections.perkOrder = index
+
+                                        //summonerMapper.insertMatchPartPerksSelectionV5(selections)
+                                    }
+                                }
+
+                                //summonerMapper.insertMatchInfoParticipantsV5(participants)
                             }
+
                         }
-
-
 
                         println(info?.teams)
 
+                        info?.teams?.forEach { teams ->
+                            teams.matchId = matchId
+                            teams.gameId = info.gameId
+
+                            teams.bans?.forEach { bans ->
+                                bans.matchId = teams.matchId
+                                bans.gameId = teams.gameId
+
+                                //summonerMapper.insertMatchInfoTeamBansV5(bans)
+
+                            }
+
+                            teams.getDataProperties()?.forEach { e ->
+
+                            }
+
+//                            summonerSpellsDto.getDataProperties()?.forEach { e ->
+//                                e.value.image?.key = e.value.key
+//
+//                                summonerSpellsMapper.insertSummonerSpellsBasic(e.value)
+//                                e.value.image?.let { summonerSpellsMapper.insertSummonerSpellsImage(it) }
+//                            }
+
+                        }
                     }
-
-
                 }
-
             }
-
         }
     }
 

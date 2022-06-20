@@ -1,6 +1,7 @@
 package com.springboot.riot.data.summoner.mapper
 
 import com.springboot.riot.data.summoner.dto.*
+import com.springboot.riot.data.summoner.dto.v5.*
 import com.springboot.riot.data.summoner.vo.SummonerInfoVo
 import org.apache.ibatis.annotations.Mapper
 
@@ -11,11 +12,7 @@ interface SummonerMapper {
 
     fun selectMatchReferenceOne(dataMap: HashMap<String, Any?>): Int
 
-    fun selectMatchReferenceOneV5(dataMap: HashMap<String, Any?>): Int
-
     fun selectMatchBasicOne(dataMap: HashMap<String, Any?>): Int
-
-    fun selectMatchBasicOneV5(dataMap: HashMap<String, Any?>): Int
 
     fun insertMatchReference(matchReferenceDto: MatchReferenceDto): Int
 
@@ -62,5 +59,17 @@ interface SummonerMapper {
 
     //적챔피언업데이트
     fun updateMatchEnemyChampion(map: HashMap<String,Any?>): Int
+
+    //MATCH V5
+    fun selectMatchReferenceOneV5(dataMap: HashMap<String, Any?>): Int
+    fun selectMatchBasicOneV5(dataMap: HashMap<String, Any?>): Int
+    fun insertMatchBasicV5(matchInfoV5Dto: MatchInfoV5Dto): Int
+    fun insertMatchInfoParticipantsV5(matchInfoParticipantsV5Dto: MatchInfoParticipantsV5Dto): Int
+    fun insertMatchPartPerksSelectionV5(matchPartPerksSelectionV5Dto: MatchPartPerksSelectionV5Dto): Int
+    fun insertMatchInfoTeamBansV5(matchInfoTeamBansV5Dto: MatchInfoTeamBansV5Dto): Int
+
+
+
+
 
 }

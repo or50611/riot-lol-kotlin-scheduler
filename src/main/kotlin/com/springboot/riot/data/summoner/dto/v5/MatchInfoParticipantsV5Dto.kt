@@ -2,6 +2,8 @@ package com.springboot.riot.data.summoner.dto.v5
 
 class MatchInfoParticipantsV5Dto {
 
+    var matchId: String? = null
+    var gameId: Long = 0L
     val assists: Int = 0
     val baronKills: Int = 0
     val bountyLevel: Int = 0
@@ -82,7 +84,7 @@ class MatchInfoParticipantsV5Dto {
     val teamEarlySurrendered: Boolean = false
     val teamId: Int = 0
     val teamPosition: String? = null
-    val timeCCingOthers: Int = 0
+    val timeCcIngOthers: Int = 0
     val timePlayed: Int = 0
     val totalDamageDealt: Int = 0
     val totalDamageDealtToChampions: Int = 0
@@ -107,6 +109,12 @@ class MatchInfoParticipantsV5Dto {
     val wardsKilled: Int = 0
     val wardsPlaced: Int = 0
     val win: Boolean = false
+
+    var perkPrimaryStyle: Int = 0
+    var perkSubStyle: Int = 0
+    var statPerkDefense: Int = 0
+    var statPerkFlex: Int = 0
+    var statPerkOffense: Int = 0
 
     val challenges: MatchPartChallengesV5Dto? = null
     val perks: MatchPartPerksV5Dto? = null

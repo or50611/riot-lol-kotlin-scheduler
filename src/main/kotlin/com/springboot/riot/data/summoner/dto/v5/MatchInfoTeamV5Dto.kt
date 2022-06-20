@@ -8,7 +8,8 @@ import com.springboot.riot.data.summoner_spells.dto.SummonerSpellsDataDto
 import java.util.HashMap
 
 class MatchInfoTeamV5Dto {
-
+    var matchId: String? = null
+    var gameId: Long = 0L
     val teamId: Int = 0
     val win: Boolean = false
 

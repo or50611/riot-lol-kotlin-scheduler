@@ -775,5 +775,278 @@
 
 
 
+	<insert id="insertMatchBasicV5" parameterType="com.springboot.riot.data.summoner.dto.v5.MatchInfoV5Dto">
+		INSERT INTO MATCH_BASIC
+		(
+			MATCH_ID
+			, GAME_CREATION
+			, GAME_DURATION
+			, GAME_END_TIMESTAMP
+			, GAME_ID
+			, GAME_MODE
+			, GAME_NAME
+			, GAME_START_TIMESTAMP
+			, GAME_TYPE
+			, GAME_VERSION
+			, MAP_ID
+			, PLATFORM_ID
+			, QUEUE_ID
+			, TOURNAMENT_CODE
+		) VALUES (
+			#{matchId}
+			, #{gameCreation}
+			, #{gameDuration}
+			, #{gameEndTimestamp}
+			, #{gameId}
+			, #{gameMode}
+			, #{gameName}
+			, #{gameStartTimestamp}
+			, #{gameType}
+			, #{gameVersion}
+			, #{mapId}
+			, #{platformId}
+			, #{queueId}
+			, #{tournamentCode}
+		)
+	</insert>
+
+
+	<insert id="insertMatchInfoParticipantsV5" parameterType="com.springboot.riot.data.summoner.dto.v5.MatchInfoParticipantsV5Dto">
+		INSERT INTO MATCH_BASIC
+		(
+			MATCH_ID
+			, GAME_ID
+			, ASSISTS
+			, BARON_KILLS
+			, BOUNTY_LEVEL
+			, CHAMP_EXPERIENCE
+			, CHAMP_LEVEL
+			, CHAMPION_ID
+			, CHAMPION_NAME
+			, CHAMPION_TRANSFORM
+			, CONSUMABLES_PURCHASED
+			, DAMAGE_DEALT_TO_BUILDINGS
+			, DAMAGE_DEALT_TO_OBJECTIVES
+			, DAMAGE_DEALT_TO_TURRETS
+			, DAMAGE_SELF_MITIGATED
+			, DEATHS
+			, DETECTOR_WARDS_PLACED
+			, DOUBLE_KILLS
+			, DRAGON_KILLS
+			, ELIGIBLE_FOR_PROGRESSION
+			, FIRST_BLOOD_ASSIST
+			, FIRST_BLOOD_KILL
+			, FIRST_TOWER_ASSIST
+			, FIRST_TOWER_KILL
+			, GAME_ENDED_IN_EARLY_SURRENDER
+			, GAME_ENDED_IN_SURRENDER
+			, GOLD_EARNED
+			, GOLD_SPENT
+			, INDIVIDUAL_POSITION
+			, INHIBITOR_KILLS
+			, INHIBITOR_TAKEDOWNS
+			, INHIBITORS_LOST
+			, ITEM0
+			, ITEM1
+			, ITEM2
+			, ITEM3
+			, ITEM4
+			, ITEM5
+			, ITEM6
+			, ITEMS_PURCHASED
+			, KILLING_SPREES
+			, KILLS
+			, LANE
+			, LARGEST_CRITICAL_STRIKE
+			, LARGEST_KILLING_SPREE
+			, LARGEST_MULTI_KILL
+			, LONGEST_TIME_SPENT_LIVING
+			, MAGIC_DAMAGE_DEALT
+			, MAGIC_DAMAGE_DEALT_TO_CHAMPIONS
+			, MAGIC_DAMAGE_TAKEN
+			, NEUTRAL_MINIONS_KILLED
+			, NEXUS_KILLS
+			, NEXUS_LOST
+			, NEXUS_TAKEDOWNS
+			, OBJECTIVES_STOLEN
+			, OBJECTIVES_STOLEN_ASSISTS
+			, PARTICIPANT_ID
+			, PENTA_KILLS
+			, PHYSICAL_DAMAGE_DEALT
+			, PHYSICAL_DAMAGE_DEALT_TO_CHAMPIONS
+			, PHYSICAL_DAMAGE_TAKEN
+			, PROFILE_ICON
+			, PUUID
+			, QUADRA_KILLS
+			, RIOT_ID_NAME
+			, RIOT_ID_TAGLINE
+			, ROLE
+			, SIGHT_WARDS_BOUGHT_IN_GAME
+			, SPELL1_CASTS
+			, SPELL2_CASTS
+			, SPELL3_CASTS
+			, SPELL4_CASTS
+			, SUMMONER1_CASTS
+			, SUMMONER1_ID
+			, SUMMONER2_CASTS
+			, SUMMONER2_ID
+			, SUMMONER_ID
+			, SUMMONER_LEVEL
+			, SUMMONER_NAME
+			, TEAM_EARLY_SURRENDERED
+			, TEAM_ID
+			, TEAM_POSITION
+			, TIME_CC_ING_OTHERS
+			, TIME_PLAYED
+			, TOTAL_DAMAGE_DEALT
+			, TOTAL_DAMAGE_DEALT_TO_CHAMPIONS
+			, TOTAL_DAMAGE_SHIELDED_ON_TEAMMATES
+			, TOTAL_DAMAGE_TAKEN
+			, TOTAL_HEAL
+			, TOTAL_HEALS_ON_TEAMMATES
+			, TOTAL_MINIONS_KILLED
+			, TOTAL_TIME_C_C_DEALT
+			, TOTAL_TIME_SPENT_DEAD
+			, TOTAL_UNITS_HEALED
+			, TRIPLE_KILLS
+			, TRUE_DAMAGE_DEALT
+			, TRUE_DAMAGE_DEALT_TO_CHAMPIONS
+			, TRUE_DAMAGE_TAKEN
+			, TURRET_KILLS
+			, TURRET_TAKEDOWNS
+			, TURRETS_LOST
+			, UNREAL_KILLS
+			, VISION_SCORE
+			, VISION_WARDS_BOUGHT_IN_GAME
+			, WARDS_KILLED
+			, WARDS_PLACED
+			, WIN
+			, PERK_PRIMARY_STYLE
+			, PERK_SUB_STYLE
+			, STAT_PERK_DEFENSE
+			, STAT_PERK_FLEX
+			, STAT_PERK_OFFENSE
+		) VALUES (
+			#{matchId}
+			, #{gameId}
+			, #{assists}
+			, #{baronKills}
+			, #{bountyLevel}
+			, #{champExperience}
+			, #{champLevel}
+			, #{championId}
+			, #{championName}
+			, #{championTransform}
+			, #{consumablesPurchased}
+			, #{damageDealtToBuildings}
+			, #{damageDealtToObjectives}
+			, #{damageDealtToTurrets}
+			, #{damageSelfMitigated}
+			, #{deaths}
+			, #{detectorWardsPlaced}
+			, #{doubleKills}
+			, #{dragonKills}
+			, #{eligibleForProgression}
+			, #{firstBloodAssist}
+			, #{firstBloodKill}
+			, #{firstTowerAssist}
+			, #{firstTowerKill}
+			, #{gameEndedInEarlySurrender}
+			, #{gameEndedInSurrender}
+			, #{goldEarned}
+			, #{goldSpent}
+			, #{individualPosition}
+			, #{inhibitorKills}
+			, #{inhibitorTakedowns}
+			, #{inhibitorsLost}
+			, #{item0}
+			, #{item1}
+			, #{item2}
+			, #{item3}
+			, #{item4}
+			, #{item5}
+			, #{item6}
+			, #{itemsPurchased}
+			, #{killingSprees}
+			, #{kills}
+			, #{lane}
+			, #{largestCriticalStrike}
+			, #{largestKillingSpree}
+			, #{largestMultiKill}
+			, #{longestTimeSpentLiving}
+			, #{magicDamageDealt}
+			, #{magicDamageDealtToChampions}
+			, #{magicDamageTaken}
+			, #{neutralMinionsKilled}
+			, #{nexusKills}
+			, #{nexusLost}
+			, #{nexusTakedowns}
+			, #{objectivesStolen}
+			, #{objectivesStolenAssists}
+			, #{participantId}
+			, #{pentaKills}
+			, #{physicalDamageDealt}
+			, #{physicalDamageDealtToChampions}
+			, #{physicalDamageTaken}
+			, #{profileIcon}
+			, #{puuid}
+			, #{quadraKills}
+			, #{riotIdName}
+			, #{riotIdTagline}
+			, #{role}
+			, #{sightWardsBoughtInGame}
+			, #{spell1Casts}
+			, #{spell2Casts}
+			, #{spell3Casts}
+			, #{spell4Casts}
+			, #{summoner1Casts}
+			, #{summoner1Id}
+			, #{summoner2Casts}
+			, #{summoner2Id}
+			, #{summonerId}
+			, #{summonerLevel}
+			, #{summonerName}
+			, #{teamEarlySurrendered}
+			, #{teamId}
+			, #{teamPosition}
+			, #{timeCCingOthers}
+			, #{timePlayed}
+			, #{totalDamageDealt}
+			, #{totalDamageDealtToChampions}
+			, #{totalDamageShieldedOnTeammates}
+			, #{totalDamageTaken}
+			, #{totalHeal}
+			, #{totalHealsOnTeammates}
+			, #{totalMinionsKilled}
+			, #{totalTimeCCDealt}
+			, #{totalTimeSpentDead}
+			, #{totalUnitsHealed}
+			, #{tripleKills}
+			, #{trueDamageDealt}
+			, #{trueDamageDealtToChampions}
+			, #{trueDamageTaken}
+			, #{turretKills}
+			, #{turretTakedowns}
+			, #{turretsLost}
+			, #{unrealKills}
+			, #{visionScore}
+			, #{visionWardsBoughtInGame}
+			, #{wardsKilled}
+			, #{wardsPlaced}
+			, #{win}
+			, #{perkPrimaryStyle}
+			, #{perkSubStyle}
+			, #{statPerkDefense}
+			, #{statPerkFlex}
+			, #{statPerkOffense}
+		)
+	</insert>
+
+
+
+
+
+
+
 
 </mapper>

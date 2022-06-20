@@ -2,6 +2,7 @@ package com.springboot.riot.data.summoner.dto.v5
 
 data class MatchInfoV5Dto(
 
+    var matchId: String? = null,
     val gameCreation: Long = 0L,
     val gameDuration: Long = 0L,
     val gameEndTimestamp: Long = 0L,
