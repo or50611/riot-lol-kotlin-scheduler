@@ -84,7 +84,7 @@ class MatchInfoParticipantsV5Dto {
     val teamEarlySurrendered: Boolean = false
     val teamId: Int = 0
     val teamPosition: String? = null
-    val timeCcIngOthers: Int = 0
+    val timeCCingOthers: Int = 0
     val timePlayed: Int = 0
     val totalDamageDealt: Int = 0
     val totalDamageDealtToChampions: Int = 0

@@ -4,6 +4,10 @@ import com.google.gson.annotations.SerializedName
 
 data class MatchPartChallengesV5Dto (
 
+    var matchId: String? = null,
+    var gameId: Long = 0L,
+    var participantId: Int = 0,
+
     @SerializedName(value = "12AssistStreakCount")
     val assistStreakCount: Int = 0,
     val abilityUses: Int = 0,

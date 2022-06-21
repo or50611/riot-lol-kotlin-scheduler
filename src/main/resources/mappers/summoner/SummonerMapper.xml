@@ -28,12 +28,6 @@
 		AND   GAME_ID = #{gameId}
 	</select>
 
-	<select id="selectMatchReferenceOneV5" parameterType="hashMap" resultType="Int">
-		SELECT COUNT(*)
-		FROM SUMMONER_MATCH_INFO
-		WHERE puuid = #{puuid}
-		AND   MATCH_ID = #{matchId}
-	</select>
 
 	<select id="selectMatchBasicOne" parameterType="hashMap" resultType="Int">
 		SELECT COUNT(*)
@@ -43,7 +37,7 @@
 
 	<select id="selectMatchBasicOneV5" parameterType="hashMap" resultType="Int">
 		SELECT COUNT(*)
-		FROM MATCH_BASIC
+		FROM MATCH_BASIC_V5
 		WHERE MATCH_ID = #{matchId}
 	</select>
 
@@ -774,9 +768,28 @@
 	</update>
 
 
+	<select id="selectMatchReferenceOneV5" parameterType="com.springboot.riot.data.summoner.dto.v5.SummonerMatchV5Dto" resultType="Int">
+		SELECT COUNT(*)
+		FROM SUMMONER_MATCH_INFO_V5
+		WHERE PUUID = #{puuid}
+		AND   MATCH_ID = #{matchId}
+	</select>
+
+
+	<insert id="insertSummonerMatchV5" parameterType="com.springboot.riot.data.summoner.dto.v5.SummonerMatchV5Dto">
+		INSERT INTO SUMMONER_MATCH_INFO_V5
+		(
+			PUUID
+			, MATCH_ID
+		) VALUES (
+			#{puuid}
+			, #{matchId}
+		)
+	</insert>
+
 
 	<insert id="insertMatchBasicV5" parameterType="com.springboot.riot.data.summoner.dto.v5.MatchInfoV5Dto">
-		INSERT INTO MATCH_BASIC
+		INSERT INTO MATCH_BASIC_V5
 		(
 			MATCH_ID
 			, GAME_CREATION
@@ -812,7 +825,7 @@
 
 
 	<insert id="insertMatchInfoParticipantsV5" parameterType="com.springboot.riot.data.summoner.dto.v5.MatchInfoParticipantsV5Dto">
-		INSERT INTO MATCH_BASIC
+		INSERT INTO MATCH_PARTICIPANT_INFO_V5
 		(
 			MATCH_ID
 			, GAME_ID
@@ -905,7 +918,7 @@
 			, TOTAL_HEAL
 			, TOTAL_HEALS_ON_TEAMMATES
 			, TOTAL_MINIONS_KILLED
-			, TOTAL_TIME_C_C_DEALT
+			, TOTAL_TIME_CC_DEALT
 			, TOTAL_TIME_SPENT_DEAD
 			, TOTAL_UNITS_HEALED
 			, TRIPLE_KILLS
@@ -1043,10 +1056,325 @@
 	</insert>
 
 
+	<insert id="insertMatchPartPerksSelectionV5" parameterType="com.springboot.riot.data.summoner.dto.v5.MatchPartPerksSelectionV5Dto">
+		INSERT INTO MATCH_PARTICIPANT_PERK_V5
+		(
+			MATCH_ID
+			, GAME_ID
+			, PARTICIPANT_ID
+			, DESCRIPTION
+			, STYLE
+			, PERK_ORDER
+			, PERK
+			, VAR1
+			, VAR2
+			, VAR3
+		) VALUES (
+			#{matchId}
+			, #{gameId}
+			, #{participantId}
+			, #{description}
+			, #{style}
+			, #{perkOrder}
+			, #{perk}
+			, #{var1}
+			, #{var2}
+			, #{var3}
+		)
+	</insert>
+
+	<insert id="insertMatchPartChallengesV5" parameterType="com.springboot.riot.data.summoner.dto.v5.MatchPartChallengesV5Dto">
+		INSERT INTO MATCH_PARTICIPANT_CHALLENGE_V5
+		(
+			MATCH_ID
+			, GAME_ID
+			, PARTICIPANT_ID
+			, ASSIST_STREAK_COUNT
+			, ABILITY_USES
+			, ACES_BEFORE15_MINUTES
+			, ALLIED_JUNGLE_MONSTER_KILLS
+			, BARON_BUFF_GOLD_ADVANTAGE_OVER_THRESHOLD
+			, BARON_TAKEDOWNS
+			, BLAST_CONE_OPPOSITE_OPPONENT_COUNT
+			, BOUNTY_GOLD
+			, BUFFS_STOLEN
+			, COMPLETE_SUPPORT_QUEST_IN_TIME
+			, CONTROL_WARD_TIME_COVERAGE_IN_RIVER_OR_ENEMY_HALF
+			, CONTROL_WARDS_PLACED
+			, DAMAGE_PER_MINUTE
+			, DAMAGE_TAKEN_ON_TEAM_PERCENTAGE
+			, DANCED_WITH_RIFT_HERALD
+			, DEATHS_BY_ENEMY_CHAMPS
+			, DODGE_SKILL_SHOTS_SMALL_WINDOW
+			, DOUBLE_ACES
+			, DRAGON_TAKEDOWNS
+			, EARLIEST_BARON
+			, EARLY_LANING_PHASE_GOLD_EXP_ADVANTAGE
+			, EFFECTIVE_HEAL_AND_SHIELDING
+			, ELDER_DRAGON_KILLS_WITH_OPPOSING_SOUL
+			, ELDER_DRAGON_MULTIKILLS
+			, ENEMY_CHAMPION_IMMOBILIZATIONS
+			, ENEMY_JUNGLE_MONSTER_KILLS
+			, EPIC_MONSTER_KILLS_NEAR_ENEMY_JUNGLER
+			, EPIC_MONSTER_KILLS_WITHIN30_SECONDS_OF_SPAWN
+			, EPIC_MONSTER_STEALS
+			, EPIC_MONSTER_STOLEN_WITHOUT_SMITE
+			, FIRST_TURRET_KILLED_TIME
+			, FLAWLESS_ACES
+			, FULL_TEAM_TAKEDOWN
+			, GAME_LENGTH
+			, GET_TAKEDOWNS_IN_ALL_LANES_EARLY_JUNGLE_AS_LANER
+			, GOLD_PER_MINUTE
+			, HAD_AFK_TEAMMATE
+			, HAD_OPEN_NEXUS
+			, IMMOBILIZE_AND_KILL_WITH_ALLY
+			, INITIAL_BUFF_COUNT
+			, INITIAL_CRAB_COUNT
+			, JUNGLE_CS_BEFORE10_MINUTES
+			, JUNGLER_TAKEDOWNS_NEAR_DAMAGED_EPIC_MONSTER
+			, K_TURRETS_DESTROYED_BEFORE_PLATES_FALL
+			, KDA
+			, KILL_AFTER_HIDDEN_WITH_ALLY
+			, KILL_PARTICIPATION
+			, KILLED_CHAMP_TOOK_FULL_TEAM_DAMAGE_SURVIVED
+			, KILLS_NEAR_ENEMY_TURRET
+			, KILLS_ON_OTHER_LANES_EARLY_JUNGLE_AS_LANER
+			, KILLS_ON_RECENTLY_HEALED_BY_ARAM_PACK
+			, KILLS_UNDER_OWN_TURRET
+			, KILLS_WITH_HELP_FROM_EPIC_MONSTER
+			, KNOCK_ENEMY_INTO_TEAM_AND_KILL
+			, LAND_SKILL_SHOTS_EARLY_GAME
+			, LANE_MINIONS_FIRST10_MINUTES
+			, LANING_PHASE_GOLD_EXP_ADVANTAGE
+			, LEGENDARY_COUNT
+			, LOST_AN_INHIBITOR
+			, MAX_CS_ADVANTAGE_ON_LANE_OPPONENT
+			, MAX_KILL_DEFICIT
+			, MAX_LEVEL_LEAD_LANE_OPPONENT
+			, MORE_ENEMY_JUNGLE_THAN_OPPONENT
+			, MULTI_KILL_ONE_SPELL
+			, MULTI_TURRET_RIFT_HERALD_COUNT
+			, MULTIKILLS
+			, MULTIKILLS_AFTER_AGGRESSIVE_FLASH
+			, MYTHIC_ITEM_USED
+			, OUTER_TURRET_EXECUTES_BEFORE10_MINUTES
+			, OUTNUMBERED_KILLS
+			, OUTNUMBERED_NEXUS_KILL
+			, PERFECT_DRAGON_SOULS_TAKEN
+			, PERFECT_GAME
+			, PICK_KILL_WITH_ALLY
+			, PORO_EXPLOSIONS
+			, QUICK_CLEANSE
+			, QUICK_FIRST_TURRET
+			, QUICK_SOLO_KILLS
+			, RIFT_HERALD_TAKEDOWNS
+			, SAVE_ALLY_FROM_DEATH
+			, SCUTTLE_CRAB_KILLS
+			, SHORTEST_TIME_TO_ACE_FROM_FIRST_TAKEDOWN
+			, SKILLSHOTS_DODGED
+			, SKILLSHOTS_HIT
+			, SNOWBALLS_HIT
+			, SOLO_BARON_KILLS
+			, SOLO_KILLS
+			, SOLO_TURRETS_LATEGAME
+			, STEALTH_WARDS_PLACED
+			, SURVIVED_SINGLE_DIGIT_HP_COUNT
+			, SURVIVED_THREE_IMMOBILIZES_IN_FIGHT
+			, TAKEDOWN_ON_FIRST_TURRET
+			, TAKEDOWNS
+			, TAKEDOWNS_AFTER_GAINING_LEVEL_ADVANTAGE
+			, TAKEDOWNS_BEFORE_JUNGLE_MINION_SPAWN
+			, TAKEDOWNS_FIRST_X_MINUTES
+			, TAKEDOWNS_IN_ALCOVE
+			, TAKEDOWNS_IN_ENEMY_FOUNTAIN
+			, TEAM_BARON_KILLS
+			, TEAM_DAMAGE_PERCENTAGE
+			, TEAM_ELDER_DRAGON_KILLS
+			, TEAM_RIFT_HERALD_KILLS
+			, THREE_WARDS_ONE_SWEEPER_COUNT
+			, TOOK_LARGE_DAMAGE_SURVIVED
+			, TURRET_PLATES_TAKEN
+			, TURRET_TAKEDOWNS
+			, TURRETS_TAKEN_WITH_RIFT_HERALD
+			, TWENTY_MINIONS_IN3_SECONDS_COUNT
+			, UNSEEN_RECALLS
+			, VISION_SCORE_ADVANTAGE_LANE_OPPONENT
+			, VISION_SCORE_PER_MINUTE
+			, WARD_TAKEDOWNS
+			, WARD_TAKEDOWNS_BEFORE20_M
+			, WARDS_GUARDED
+		) VALUES (
+			#{matchId}
+			, #{gameId}
+			, #{participantId}
+			, #{assistStreakCount}
+			, #{abilityUses}
+			, #{acesBefore15Minutes}
+			, #{alliedJungleMonsterKills}
+			, #{baronBuffGoldAdvantageOverThreshold}
+			, #{baronTakedowns}
+			, #{blastConeOppositeOpponentCount}
+			, #{bountyGold}
+			, #{buffsStolen}
+			, #{completeSupportQuestInTime}
+			, #{controlWardTimeCoverageInRiverOrEnemyHalf}
+			, #{controlWardsPlaced}
+			, #{damagePerMinute}
+			, #{damageTakenOnTeamPercentage}
+			, #{dancedWithRiftHerald}
+			, #{deathsByEnemyChamps}
+			, #{dodgeSkillShotsSmallWindow}
+			, #{doubleAces}
+			, #{dragonTakedowns}
+			, #{earliestBaron}
+			, #{earlyLaningPhaseGoldExpAdvantage}
+			, #{effectiveHealAndShielding}
+			, #{elderDragonKillsWithOpposingSoul}
+			, #{elderDragonMultikills}
+			, #{enemyChampionImmobilizations}
+			, #{enemyJungleMonsterKills}
+			, #{epicMonsterKillsNearEnemyJungler}
+			, #{epicMonsterKillsWithin30SecondsOfSpawn}
+			, #{epicMonsterSteals}
+			, #{epicMonsterStolenWithoutSmite}
+			, #{firstTurretKilledTime}
+			, #{flawlessAces}
+			, #{fullTeamTakedown}
+			, #{gameLength}
+			, #{getTakedownsInAllLanesEarlyJungleAsLaner}
+			, #{goldPerMinute}
+			, #{hadAfkTeammate}
+			, #{hadOpenNexus}
+			, #{immobilizeAndKillWithAlly}
+			, #{initialBuffCount}
+			, #{initialCrabCount}
+			, #{jungleCsBefore10Minutes}
+			, #{junglerTakedownsNearDamagedEpicMonster}
+			, #{kTurretsDestroyedBeforePlatesFall}
+			, #{kda}
+			, #{killAfterHiddenWithAlly}
+			, #{killParticipation}
+			, #{killedChampTookFullTeamDamageSurvived}
+			, #{killsNearEnemyTurret}
+			, #{killsOnOtherLanesEarlyJungleAsLaner}
+			, #{killsOnRecentlyHealedByAramPack}
+			, #{killsUnderOwnTurret}
+			, #{killsWithHelpFromEpicMonster}
+			, #{knockEnemyIntoTeamAndKill}
+			, #{landSkillShotsEarlyGame}
+			, #{laneMinionsFirst10Minutes}
+			, #{laningPhaseGoldExpAdvantage}
+			, #{legendaryCount}
+			, #{lostAnInhibitor}
+			, #{maxCsAdvantageOnLaneOpponent}
+			, #{maxKillDeficit}
+			, #{maxLevelLeadLaneOpponent}
+			, #{moreEnemyJungleThanOpponent}
+			, #{multiKillOneSpell}
+			, #{multiTurretRiftHeraldCount}
+			, #{multikills}
+			, #{multikillsAfterAggressiveFlash}
+			, #{mythicItemUsed}
+			, #{outerTurretExecutesBefore10Minutes}
+			, #{outnumberedKills}
+			, #{outnumberedNexusKill}
+			, #{perfectDragonSoulsTaken}
+			, #{perfectGame}
+			, #{pickKillWithAlly}
+			, #{poroExplosions}
+			, #{quickCleanse}
+			, #{quickFirstTurret}
+			, #{quickSoloKills}
+			, #{riftHeraldTakedowns}
+			, #{saveAllyFromDeath}
+			, #{scuttleCrabKills}
+			, #{shortestTimeToAceFromFirstTakedown}
+			, #{skillshotsDodged}
+			, #{skillshotsHit}
+			, #{snowballsHit}
+			, #{soloBaronKills}
+			, #{soloKills}
+			, #{soloTurretsLategame}
+			, #{stealthWardsPlaced}
+			, #{survivedSingleDigitHpCount}
+			, #{survivedThreeImmobilizesInFight}
+			, #{takedownOnFirstTurret}
+			, #{takedowns}
+			, #{takedownsAfterGainingLevelAdvantage}
+			, #{takedownsBeforeJungleMinionSpawn}
+			, #{takedownsFirstXMinutes}
+			, #{takedownsInAlcove}
+			, #{takedownsInEnemyFountain}
+			, #{teamBaronKills}
+			, #{teamDamagePercentage}
+			, #{teamElderDragonKills}
+			, #{teamRiftHeraldKills}
+			, #{threeWardsOneSweeperCount}
+			, #{tookLargeDamageSurvived}
+			, #{turretPlatesTaken}
+			, #{turretTakedowns}
+			, #{turretsTakenWithRiftHerald}
+			, #{twentyMinionsIn3SecondsCount}
+			, #{unseenRecalls}
+			, #{visionScoreAdvantageLaneOpponent}
+			, #{visionScorePerMinute}
+			, #{wardTakedowns}
+			, #{wardTakedownsBefore20M}
+			, #{wardsGuarded}
+		)
+	</insert>
+
+	<insert id="insertMatchInfoTeamV5" parameterType="com.springboot.riot.data.summoner.dto.v5.MatchInfoTeamV5Dto">
+		INSERT INTO MATCH_TEAM_V5
+		(
+			MATCH_ID
+			, GAME_ID
+			, TEAM_ID
+			, WIN
+		) VALUES (
+			#{matchId}
+			, #{gameId}
+			, #{teamId}
+			, #{win}
+		)
+	</insert>
 
 
+	<insert id="insertMatchInfoTeamBansV5" parameterType="com.springboot.riot.data.summoner.dto.v5.MatchInfoTeamBansV5Dto">
+		INSERT INTO MATCH_TEAM_BAN_V5
+		(
+			MATCH_ID
+			, GAME_ID
+			, TEAM_ID
+			, CHAMPION_ID
+			, PICK_TURN
+		) VALUES (
+			#{matchId}
+			, #{gameId}
+			, #{teamId}
+			, #{championId}
+			, #{pickTurn}
+		)
+	</insert>
 
-
+	<insert id="insertMatchInfoTeamObjectivesV5" parameterType="com.springboot.riot.data.summoner.dto.v5.MatchInfoTeamObjectivesV5Dto">
+		INSERT INTO MATCH_TEAM_OBJECTIVE_V5
+		(
+			MATCH_ID
+			, GAME_ID
+			, TEAM_ID
+			, OBJECTIVE
+			, FIRST_KILL
+			, KILLS
+		) VALUES (
+			#{matchId}
+			, #{gameId}
+			, #{teamId}
+			, #{objective}
+			, #{first}
+			, #{kills}
+		)
+	</insert>
 
 
 </mapper>

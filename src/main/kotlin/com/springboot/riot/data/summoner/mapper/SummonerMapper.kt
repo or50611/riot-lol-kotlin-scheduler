@@ -61,15 +61,15 @@ interface SummonerMapper {
     fun updateMatchEnemyChampion(map: HashMap<String,Any?>): Int
 
     //MATCH V5
-    fun selectMatchReferenceOneV5(dataMap: HashMap<String, Any?>): Int
+    fun selectMatchReferenceOneV5(summonerMatchV5Dto: SummonerMatchV5Dto): Int
     fun selectMatchBasicOneV5(dataMap: HashMap<String, Any?>): Int
     fun insertMatchBasicV5(matchInfoV5Dto: MatchInfoV5Dto): Int
     fun insertMatchInfoParticipantsV5(matchInfoParticipantsV5Dto: MatchInfoParticipantsV5Dto): Int
     fun insertMatchPartPerksSelectionV5(matchPartPerksSelectionV5Dto: MatchPartPerksSelectionV5Dto): Int
     fun insertMatchInfoTeamBansV5(matchInfoTeamBansV5Dto: MatchInfoTeamBansV5Dto): Int
-
-
-
-
+    fun insertMatchInfoTeamObjectivesV5(matchInfoTeamObjectivesV5Dto: MatchInfoTeamObjectivesV5Dto): Int
+    fun insertMatchPartChallengesV5(matchPartChallengesV5Dto: MatchPartChallengesV5Dto): Int
+    fun insertMatchInfoTeamV5(matchInfoTeamV5Dto: MatchInfoTeamV5Dto): Int
+    fun insertSummonerMatchV5(summonerMatchV5Dto: SummonerMatchV5Dto): Int
 
 }
