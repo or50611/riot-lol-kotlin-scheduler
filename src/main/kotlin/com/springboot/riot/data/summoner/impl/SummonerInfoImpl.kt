@@ -52,11 +52,9 @@ class SummonerInfoImpl: SummonerService {
         summonerInfoVo.forEach { vo ->
 
             val puuid = vo.puuid
-
             //매치리스트
             val matchListEntity: ResponseEntity<MatchListV5Dto> = restTemplate.exchange(Globals.API_MATCH_LISTS_V5 + puuid + "/ids?start=0&count=5", HttpMethod.GET, httpEntity, MatchListV5Dto::class.java)
             matchListV5Dto = matchListEntity.body
-
             matchListV5Dto?.forEach { matchId ->
 
                 summonerMatchV5Dto.matchId = matchId
@@ -79,7 +77,6 @@ class SummonerInfoImpl: SummonerService {
                         //게임상세정보
                         val matchEntity: ResponseEntity<MatchV5Dto> = restTemplate.exchange(Globals.API_MATCH_INFO_V5 + matchId, HttpMethod.GET, httpEntity, MatchV5Dto::class.java)
                         val matchV5Dto: MatchV5Dto? = matchEntity.body
-
                         matchV5Dto?.info?.let { info ->
                             info.matchId = matchId
                             //매치 기본정보

@@ -62,4 +62,10 @@ class BatchBaseScheduler {
 //        summonerService.summonerJsonInfoV4()
 //    }
 
+    @Scheduled(fixedDelay = 600000)
+    fun matchUpdate() {
+        logger.info("matchUpdateV5 호출 : {} ", Date())
+        summonerService.summonerJsonInfoV5()
+    }
+
 }
