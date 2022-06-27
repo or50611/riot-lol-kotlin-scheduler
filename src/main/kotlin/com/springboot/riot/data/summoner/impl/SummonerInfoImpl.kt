@@ -95,10 +95,7 @@ class SummonerInfoImpl: SummonerService {
                                     }
 
                                     perks.styles?.forEach { styles ->
-                                        when(styles.description) {
-                                            "primaryStyle" -> participants.perkPrimaryStyle = styles.style
-                                            "subStyle" -> participants.perkSubStyle = styles.style
-                                        }
+
 
                                         styles.selections?.forEachIndexed { index, selections ->
                                             selections.matchId = participants.matchId
@@ -107,6 +104,13 @@ class SummonerInfoImpl: SummonerService {
                                             selections.participantId = participants.participantId
                                             selections.style = styles.style
                                             selections.perkOrder = index
+
+                                            if(index == 0){
+                                                when(styles.description) {
+                                                    "primaryStyle" -> participants.perkPrimaryStyle = selections.perk
+                                                    "subStyle" -> participants.perkSubStyle = selections.perk
+                                                }
+                                            }
 
                                             summonerMapper.insertMatchPartPerksSelectionV5(selections)
                                         }
