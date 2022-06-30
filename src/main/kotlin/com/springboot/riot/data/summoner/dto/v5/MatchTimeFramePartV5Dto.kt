@@ -1,6 +1,10 @@
 package com.springboot.riot.data.summoner.dto.v5
 
 data class MatchTimeFramePartV5Dto (
+    var matchId: String? = null,
+    var gameId: Long = 0L,
+    var parentTimestamp: Long = 0L,
+    var frameId: Int = 0,
 
     val championStats: MatchTimeFramePartChampionV5Dto? = null,
     val currentGold: Int = 0,
@@ -15,4 +19,6 @@ data class MatchTimeFramePartV5Dto (
     val totalGold: Int = 0,
     val xp: Int = 0,
 
+    var x: Int = 0,
+    var y: Int = 0,
 )

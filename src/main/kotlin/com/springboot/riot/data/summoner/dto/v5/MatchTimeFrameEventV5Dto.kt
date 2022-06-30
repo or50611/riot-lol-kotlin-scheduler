@@ -16,7 +16,10 @@ data class MatchTimeFrameEventV5Dto(
     //WARD_KILL
     //BUILDING_KILL
     //ELITE_MONSTER
+
     //TURRET_PLATE_DESTROYED
+    //CHAMPION_SPECIAL_KILL
+    //OBJECTIVE_BOUNTY_PRESTART
     var matchId: String? = null,
     var gameId: Long = 0L,
     var parentTimestamp: Long = 0L,
@@ -30,6 +33,7 @@ data class MatchTimeFrameEventV5Dto(
     //CHAMPION,BUILDING,ELITE_MONSTER_
     val position: MatchTimeLinePositionDto? = null,
     //CHAMPION,BUILDING
+    val bounty: Int = 0,
     val assistingParticipantIds: List<Int>? = null,
 
     //SKILL
@@ -44,6 +48,15 @@ data class MatchTimeFrameEventV5Dto(
 
     //CHAMPION
     val victimId: Int = 0,
+    val shutdownBounty: Int = 0,
+    val killStreakLength: Int = 0,
+
+    //victimDamageDealt,victimDamageReceived list 챔피언킬 상세데이터 필요없을것같아서 제외시킴
+
+    //CHAMPION_SPECIAL_KILL
+    val killType: String? = null,
+    val multiKillLength: Int = 0,
+
 
     //ELITE_MONSTER
     val monsterType: String? = null,
@@ -59,6 +72,10 @@ data class MatchTimeFrameEventV5Dto(
     val buildingType: String? = null,
     val laneType: String? = null,
     val towerType: String? = null,
+
+    //OBJECTIVE_BOUNTY_PRESTART
+    val actualStartTime: Long = 0L,
+
 
     var x: Int = 0,
     var y: Int = 0,

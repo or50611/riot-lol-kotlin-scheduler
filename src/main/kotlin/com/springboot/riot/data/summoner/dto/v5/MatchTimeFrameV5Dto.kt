@@ -8,7 +8,7 @@ class MatchTimeFrameV5Dto {
     val events: List<MatchTimeFrameEventV5Dto>? = null
     val timestamp: Long = 0L
 
-    private var participantFrames: MutableMap<String, MatchTimeFramePartV5Dto> = HashMap()
+    var participantFrames: MutableMap<String, MatchTimeFramePartV5Dto> = HashMap()
 
     @JsonAnyGetter
     fun getDataProperties(): Map<String, MatchTimeFramePartV5Dto>? {
