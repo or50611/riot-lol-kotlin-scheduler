@@ -4,6 +4,7 @@ import com.springboot.riot.data.dto.LeagueEntryListDto
 import com.springboot.riot.data.league.mapper.LeagueMapper
 import com.springboot.riot.data.summoner.dto.*
 import com.springboot.riot.data.summoner.dto.v5.MatchListV5Dto
+import com.springboot.riot.data.summoner.dto.v5.MatchTimeV5Dto
 import com.springboot.riot.data.summoner.dto.v5.MatchV5Dto
 import com.springboot.riot.data.summoner.dto.v5.SummonerMatchV5Dto
 import com.springboot.riot.data.summoner.mapper.SummonerMapper
@@ -66,6 +67,7 @@ class SummonerInfoImpl: SummonerService {
 
                 val count = summonerMapper.selectMatchReferenceOneV5(summonerMatchV5Dto)
 
+
                 if(count == 0) {
 
                     logger.info("=======================================================")
@@ -78,9 +80,14 @@ class SummonerInfoImpl: SummonerService {
                         val matchEntity: ResponseEntity<MatchV5Dto> = restTemplate.exchange(Globals.API_MATCH_INFO_V5 + matchId, HttpMethod.GET, httpEntity, MatchV5Dto::class.java)
                         val matchV5Dto: MatchV5Dto? = matchEntity.body
                         matchV5Dto?.info?.let { info ->
+
                             info.matchId = matchId
                             //매치 기본정보
                             summonerMapper.insertMatchBasicV5(info)
+
+                            if(info.queueId != 420){
+                                return@forEach
+                            }
 
                             //매치 잠가자
                             info?.participants?.forEach { participants ->
@@ -152,6 +159,62 @@ class SummonerInfoImpl: SummonerService {
 
                                     summonerMapper.insertMatchInfoTeamObjectivesV5(e.value)
 
+                                }
+                            }
+
+                            //매치타임라인정보
+                            val timeLineEntity: ResponseEntity<MatchTimeV5Dto> = restTemplate.exchange(Globals.API_MATCH_INFO_V5 + matchId + "/timeline", HttpMethod.GET, httpEntity, MatchTimeV5Dto::class.java)
+                            val matchTimeV5Dto: MatchTimeV5Dto? = timeLineEntity.body
+
+                            matchTimeV5Dto?.info.let { info ->
+                                info?.frames?.forEach { frames ->
+
+                                    frames.getDataProperties()?.forEach { participantFrames ->
+                                        participantFrames.value.let { value ->
+
+
+                                            value.matchId = matchId
+                                            value.gameId = info.gameId
+                                            value.frameId = participantFrames.key.toIntOrNull() ?: 0
+                                            value.parentTimestamp = frames.timestamp
+                                            value.x = value.position?.x ?: 0
+                                            value.y = value.position?.y ?: 0
+
+                                            summonerMapper.insertMatchTimePartFrameV5(value)
+
+                                            value.championStats?.let { championStats ->
+                                                championStats.matchId = value.matchId
+                                                championStats.gameId = value.gameId
+                                                championStats.frameId = value.frameId
+                                                championStats.parentTimestamp = value.parentTimestamp
+
+                                                summonerMapper.insertMatchTimePartFrameChampStatV5(championStats)
+                                            }
+
+                                            value.damageStats?.let { damageStats ->
+                                                damageStats.matchId = value.matchId
+                                                damageStats.gameId = value.gameId
+                                                damageStats.frameId = value.frameId
+                                                damageStats.parentTimestamp = value.parentTimestamp
+
+                                                summonerMapper.insertMatchTimePartFrameDamageStatV5(damageStats)
+                                            }
+
+                                        }
+                                    }
+
+                                    frames.events?.forEach { events ->
+                                        events.matchId = matchId
+                                        events.gameId = info.gameId
+                                        events.parentTimestamp = frames.timestamp
+
+                                        events.type?.let { type ->
+                                            when {
+                                                type.startsWith("SKILL") -> summonerMapper.insertMatchTimeEventSkillV5(events)
+                                                type.startsWith("ITEM") -> summonerMapper.insertMatchTimeEventItemV5(events)
+                                            }
+                                        }
+                                    }
                                 }
                             }
                         }

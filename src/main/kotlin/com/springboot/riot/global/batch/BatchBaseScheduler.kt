@@ -32,37 +32,31 @@ class BatchBaseScheduler {
     @Autowired
     lateinit var summonerService: SummonerService
 
-//    @Scheduled(fixedDelay = 3600000)
-//    fun championDataUpdate() {
-//        logger.info("championDataUpdate 호출 : {} ", Date())
-//        championDataService.championJsonInfo()
-//    }
-//
-//    @Scheduled(fixedDelay = 3600000)
-//    fun itemDataUpdate() {
-//        logger.info("itemDataUpdate 호출 : {} ", Date())
-//        itemDataService.itemJsonInfo()
-//    }
-//
-//    @Scheduled(fixedDelay = 3600000)
-//    fun runeDataUpdate() {
-//        logger.info("runeDataUpdate 호출 : {} ", Date())
-//        runeDataService.runeJsonInfo()
-//    }
-//
-//    @Scheduled(fixedDelay = 3600000)
-//    fun summonerSpellsDataUpdate() {
-//        logger.info("summonerSpellsDataUpdate 호출 : {} ", Date())
-//        summonerSpellsDataService.summonerSpellsJsonInfo()
-//    }
-//
-//    @Scheduled(fixedDelay = 600000)
-//    fun matchUpdate() {
-//        logger.info("matchUpdate 호출 : {} ", Date())
-//        summonerService.summonerJsonInfoV4()
-//    }
+    @Scheduled(fixedDelay = 3600000)
+    fun championDataUpdate() {
+        logger.info("championDataUpdate 호출 : {} ", Date())
+        championDataService.championJsonInfo()
+    }
 
-    @Scheduled(fixedDelay = 600000)
+    @Scheduled(fixedDelay = 3600000)
+    fun itemDataUpdate() {
+        logger.info("itemDataUpdate 호출 : {} ", Date())
+        itemDataService.itemJsonInfo()
+    }
+
+    @Scheduled(fixedDelay = 3600000)
+    fun runeDataUpdate() {
+        logger.info("runeDataUpdate 호출 : {} ", Date())
+        runeDataService.runeJsonInfo()
+    }
+
+    @Scheduled(fixedDelay = 3600000)
+    fun summonerSpellsDataUpdate() {
+        logger.info("summonerSpellsDataUpdate 호출 : {} ", Date())
+        summonerSpellsDataService.summonerSpellsJsonInfo()
+    }
+
+    @Scheduled(fixedDelay = 1200000)
     fun matchUpdate() {
         logger.info("matchUpdateV5 호출 : {} ", Date())
         summonerService.summonerJsonInfoV5()

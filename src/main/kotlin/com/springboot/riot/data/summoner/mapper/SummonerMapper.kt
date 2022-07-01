@@ -71,5 +71,13 @@ interface SummonerMapper {
     fun insertMatchPartChallengesV5(matchPartChallengesV5Dto: MatchPartChallengesV5Dto): Int
     fun insertMatchInfoTeamV5(matchInfoTeamV5Dto: MatchInfoTeamV5Dto): Int
     fun insertSummonerMatchV5(summonerMatchV5Dto: SummonerMatchV5Dto): Int
+    fun insertMatchTimePartFrameV5(matchTimeFramePartV5Dto: MatchTimeFramePartV5Dto): Int
+    fun insertMatchTimeEventSkillV5(matchTimeFrameEventV5Dto: MatchTimeFrameEventV5Dto): Int
+    fun insertMatchTimeEventItemV5(matchTimeFrameEventV5Dto: MatchTimeFrameEventV5Dto): Int
+    fun insertMatchTimePartFrameChampStatV5(matchTimeFramePartChampionV5Dto: MatchTimeFramePartChampionV5Dto): Int
+    fun insertMatchTimePartFrameDamageStatV5(matchTimeFramePartDamageV5Dto: MatchTimeFramePartDamageV5Dto): Int
+
+
+
 
 }

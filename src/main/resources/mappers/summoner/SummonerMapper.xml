@@ -1377,4 +1377,195 @@
 	</insert>
 
 
+	<insert id="insertMatchTimePartFrameV5" parameterType="com.springboot.riot.data.summoner.dto.v5.MatchTimeFramePartV5Dto">
+		INSERT INTO MATCH_TIMELINE_PARTICIPANT_V5
+		(
+		MATCH_ID
+		, GAME_ID
+		, PARENT_TIMESTAMP
+		, FRAME_ID
+		, CURRENT_GOLD
+		, GOLD_PER_SECOND
+		, JUNGLE_MINIONS_KILLED
+		, LEVEL
+		, MINIONS_KILLED
+		, PARTICIPANT_ID
+		, TIME_ENEMY_SPENT_CONTROLLED
+		, TOTAL_GOLD
+		, XP
+		, X
+		, Y
+		) VALUES (
+		#{matchId}
+		, #{gameId}
+		, #{parentTimestamp}
+		, #{frameId}
+		, #{currentGold}
+		, #{goldPerSecond}
+		, #{jungleMinionsKilled}
+		, #{level}
+		, #{minionsKilled}
+		, #{participantId}
+		, #{timeEnemySpentControlled}
+		, #{totalGold}
+		, #{xp}
+		, #{x}
+		, #{y}
+		)
+	</insert>
+
+	<insert id="insertMatchTimeEventSkillV5" parameterType="com.springboot.riot.data.summoner.dto.v5.MatchTimeFrameEventV5Dto">
+		INSERT INTO MATCH_TIMELINE_EVENT_SKILL_V5
+		(
+		MATCH_ID
+		, GAME_ID
+		, PARENT_TIMESTAMP
+		, TIMESTAMP
+		, E_TYPE
+		, PARTICIPANT_ID
+		, SKILL_SLOT
+		, LEVEL_UP_TYPE
+		) VALUES (
+		#{matchId}
+		, #{gameId}
+		, #{parentTimestamp}
+		, #{timestamp}
+		, #{type}
+		, #{participantId}
+		, #{skillSlot}
+		, #{levelUpType}
+		)
+	</insert>
+
+	<insert id="insertMatchTimeEventItemV5" parameterType="com.springboot.riot.data.summoner.dto.v5.MatchTimeFrameEventV5Dto">
+		INSERT INTO MATCH_TIMELINE_EVENT_ITEM_V5
+		(
+		MATCH_ID
+		, GAME_ID
+		, PARENT_TIMESTAMP
+		, TIMESTAMP
+		, E_TYPE
+		, PARTICIPANT_ID
+		, ITEM_ID
+		, AFTER_ID
+		, BEFORE_ID
+		, GOLD_GAIN
+		) VALUES (
+		#{matchId}
+		, #{gameId}
+		, #{parentTimestamp}
+		, #{timestamp}
+		, #{type}
+		, #{participantId}
+		, #{itemId}
+		, #{afterId}
+		, #{beforeId}
+		, #{goldGain}
+		)
+	</insert>
+
+	<insert id="insertMatchTimePartFrameChampStatV5" parameterType="com.springboot.riot.data.summoner.dto.v5.MatchTimeFramePartChampionV5Dto">
+		INSERT INTO MATCH_TIMELINE_PARTICIPANT_CHAMPION_STATS_V5
+		(
+		MATCH_ID
+		, GAME_ID
+		, PARENT_TIMESTAMP
+		, FRAME_ID
+		, ABILITY_HASTE
+		, ABILITY_POWER
+		, ARMOR
+		, ARMOR_PEN
+		, ARMOR_PEN_PERCENT
+		, ATTACK_DAMAGE
+		, ATTACK_SPEED
+		, BONUS_ARMOR_PEN_PERCENT
+		, BONUS_MAGIC_PEN_PERCENT
+		, CC_REDUCTION
+		, COOLDOWN_REDUCTION
+		, HEALTH
+		, HEALTH_MAX
+		, HEALTH_REGEN
+		, LIFESTEAL
+		, MAGIC_PEN
+		, MAGIC_PEN_PERCENT
+		, MAGIC_RESIST
+		, MOVEMENT_SPEED
+		, OMNIVAMP
+		, PHYSICAL_VAMP
+		, POWER
+		, POWER_MAX
+		, POWER_REGEN
+		, SPELL_VAMP
+		) VALUES (
+		#{matchId}
+		, #{gameId}
+		, #{parentTimestamp}
+		, #{frameId}
+		, #{abilityHaste}
+		, #{abilityPower}
+		, #{armor}
+		, #{armorPen}
+		, #{armorPenPercent}
+		, #{attackDamage}
+		, #{attackSpeed}
+		, #{bonusArmorPenPercent}
+		, #{bonusMagicPenPercent}
+		, #{ccReduction}
+		, #{cooldownReduction}
+		, #{health}
+		, #{healthMax}
+		, #{healthRegen}
+		, #{lifesteal}
+		, #{magicPen}
+		, #{magicPenPercent}
+		, #{magicResist}
+		, #{movementSpeed}
+		, #{omnivamp}
+		, #{physicalVamp}
+		, #{power}
+		, #{powerMax}
+		, #{powerRegen}
+		, #{spellVamp}
+		)
+	</insert>
+
+	<insert id="insertMatchTimePartFrameDamageStatV5" parameterType="com.springboot.riot.data.summoner.dto.v5.MatchTimeFramePartDamageV5Dto">
+		INSERT INTO MATCH_TIMELINE_PARTICIPANT_DAMAGE_STATS_V5
+		(
+		MATCH_ID
+		, GAME_ID
+		, PARENT_TIMESTAMP
+		, FRAME_ID
+		, MAGIC_DAMAGE_DONE
+		, MAGIC_DAMAGE_DONE_TO_CHAMPIONS
+		, MAGIC_DAMAGE_TAKEN
+		, PHYSICAL_DAMAGE_DONE
+		, PHYSICAL_DAMAGE_DONE_TO_CHAMPIONS
+		, PHYSICAL_DAMAGE_TAKEN
+		, TOTAL_DAMAGE_DONE
+		, TOTAL_DAMAGE_DONE_TO_CHAMPIONS
+		, TOTAL_DAMAGE_TAKEN
+		, TRUE_DAMAGE_DONE
+		, TRUE_DAMAGE_DONE_TO_CHAMPIONS
+		, TRUE_DAMAGE_TAKEN
+		) VALUES (
+		#{matchId}
+		, #{gameId}
+		, #{parentTimestamp}
+		, #{frameId}
+		, #{magicDamageDone}
+		, #{magicDamageDoneToChampions}
+		, #{magicDamageTaken}
+		, #{physicalDamageDone}
+		, #{physicalDamageDoneToChampions}
+		, #{physicalDamageTaken}
+		, #{totalDamageDone}
+		, #{totalDamageDoneToChampions}
+		, #{totalDamageTaken}
+		, #{trueDamageDone}
+		, #{trueDamageDoneToChampions}
+		, #{trueDamageTaken}
+		)
+	</insert>
+
 </mapper>
